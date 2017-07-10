@@ -4,7 +4,7 @@ import Card from './Card';
 
 const SectionHeader = (props) => {
   return(
-      <View style={styles.containerCard}>
+      <View style={[styles.containerCard,props.style]}>
         <Text>{props.title}</Text>
       </View>
   );
