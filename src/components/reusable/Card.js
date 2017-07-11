@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-const HEIGHT_OF_NAVBAR = 64;
 
 const Card = (props) => {
 
