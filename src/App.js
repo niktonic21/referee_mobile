@@ -43,7 +43,7 @@ class App extends Component {
 
 
     return (
-        <View>
+        <View style={{flex:1}}>
           <RouterS/>
         </View>
     );

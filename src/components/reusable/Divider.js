@@ -19,4 +19,4 @@ const Divider = (props) => {
 };
 
 
-export default Divider;
+export { Divider };

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-const Card = (props) => {
+const Card = ({flexDir, children }) => {
 
-  direction = props.flexDirection ? {flexDirection: props.flexDirection} : {flexDirection: 'column'}
+  direction = flexDir ? {flexDirection: flexDir} : {flexDirection: 'column'}
 
   return(
     <View style={[styles.containerCard,direction]}>
-      {props.children}
+      {children}
     </View>
   );
 };
 
 const styles = {
   containerCard: {
+    flex:1,
     margin: 5,
     padding: 5,
     backgroundColor: 'rgba(0,0,0,0.2)',
@@ -22,4 +23,4 @@ const styles = {
   }
 }
 
-export default Card;
+export { Card };
