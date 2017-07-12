@@ -29,6 +29,6 @@ const styles = {
   font: {
     fontSize: 10
   }
-}
+};
 
-export default MatchItem;
+export default { MatchItem };

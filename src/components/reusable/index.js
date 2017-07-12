@@ -4,3 +4,4 @@ export * from './CardItem';
 export * from './Divider';
 export * from './SectionHeader';
 export * from './MatchItem';
+export * from './Input';

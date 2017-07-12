@@ -1,11 +1,11 @@
 // app.js
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Router } from 'react-native-router-flux';
-import { connect, Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import ReduxThunk from 'redux-thunk';
+ import { View } from 'react-native';
+// import { Router } from 'react-native-router-flux';
+// import { connect, Provider } from 'react-redux';
+// import { createStore, applyMiddleware, compose } from 'redux';
+// import ReduxThunk from 'redux-thunk';
 import RouterS from './navigator/RouterS';
 
 
@@ -31,8 +31,7 @@ import RouterS from './navigator/RouterS';
 //   }
 // }
 class App extends Component {
-  render () {
-
+  render() {
     // temporary solution for ignoring yellow warning
     // "Warning: BackAndroid is deprecated. Please ...."
     console.ignoredYellowBox = ['Warning: BackAndroid'];
@@ -43,8 +42,8 @@ class App extends Component {
 
 
     return (
-        <View style={{flex:1}}>
-          <RouterS/>
+        <View style={{ flex: 1 }}>
+          <RouterS />
         </View>
     );
   }
