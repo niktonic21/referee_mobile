@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-//import firabase from 'firabase';
+//import { View, Text } from 'react-native';
+//import firebase from 'firebase';
 import { Card, CardItem, Button, Input, Divider } from '../reusable';
 
 
