@@ -5,3 +5,4 @@ export * from './Divider';
 export * from './SectionHeader';
 export * from './MatchItem';
 export * from './Input';
+export * from './Spinner';
