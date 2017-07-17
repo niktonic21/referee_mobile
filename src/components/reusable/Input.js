@@ -33,7 +33,7 @@ const styles = {
     paddingRight: 5,
     fontSize: 18,
     lineHeight: 23,
-    flex: 2,
+    flex: 5,
   },
   labelStyle: {
     fontSize: 18,

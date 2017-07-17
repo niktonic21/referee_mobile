@@ -1,10 +1,8 @@
 import React from 'react';
-import {PropTypes} from "react";
-import {Text, View, TouchableOpacity} from "react-native";
+import { Text, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-const PageView = ( close ) => {
-  //console.log('close', close);
+const PageView = () => {
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
@@ -12,18 +10,20 @@ const PageView = ( close ) => {
 
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={()=>{
+          onPress={() => {
               Actions.login();
-              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0) }}
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress= {()=>{
+          onPress={() => {
             Actions.zapasy();
-            setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0)}}
+            setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+          }}
         >
           <Text style={styles.buttonText}>Zapasy</Text>
         </TouchableOpacity>
@@ -35,33 +35,31 @@ const PageView = ( close ) => {
 
 const styles = {
    menu: {
-       flex: 1,
-     flexDirection:'column'
+     flex: 1,
+     flexDirection: 'column'
    },
-   container:{
-      flex:1,
-      flexDirection:'row'
+   container: {
+      flex: 1,
+      flexDirection: 'row'
    },
   buttonText: {
     textAlign: 'left',
-    color:'black',
-    color:'rgba(252,252,252,1)',
+    color: 'rgba(252,252,252,1)',
     fontSize: 15,
-    paddingLeft:10
+    paddingLeft: 10
    },
-   buttonContainer:{
+   buttonContainer: {
     height: 45,
     justifyContent: 'center',
     backgroundColor: 'grey'
   },
-
-  title:{
+  title: {
     textAlign: 'left',
-    color:'grey',
+    color: 'grey',
     fontSize: 17,
-    paddingLeft:10,
-    paddingTop:20
+    paddingLeft: 10,
+    paddingTop: 20
   },
-}
+};
 
 export default PageView;

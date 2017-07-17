@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import routes from './routes';
+import AuthReducer from './AuthReducer';
 // ... other reducers
 
 export default combineReducers({
-  routes,
-  // ... other reducers
+  //routes,
+  auth: AuthReducer
 });

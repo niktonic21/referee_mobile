@@ -1,36 +1,27 @@
 // app.js
-
 import React, { Component } from 'react';
- import { View } from 'react-native';
-// import { Router } from 'react-native-router-flux';
-// import { connect, Provider } from 'react-redux';
-// import { createStore, applyMiddleware, compose } from 'redux';
-// import ReduxThunk from 'redux-thunk';
+import { connect, Provider } from 'react-redux';
+import firebase from 'firebase';
 import RouterS from './navigator/RouterS';
+import configureStore from './configureStore';
 
+const store = configureStore({});
 
-// const RouterWithRedux = connect()(Router);
-// import reducers from './reducers';
-// // other imports...
-//
-// // create store...
-// const store = compose(
-//   applyMiddleware(ReduxThunk)
-// )(createStore)(reducers);
-//
-//
-// class App extends Component {
-//   render () {
-//     return (
-//       <Provider store={store}>
-//         <RouterWithRedux>
-//           <RouterS/>
-//         </RouterWithRedux>
-//       </Provider>
-//     );
-//   }
-// }
 class App extends Component {
+
+  componentWillMount() {
+    const config = {
+      apiKey: 'AIzaSyDYFLQYIcPzj1j-J6hO87hPAOoyKb5TTH4',
+      authDomain: 'referee-60959.firebaseapp.com',
+      databaseURL: 'https://referee-60959.firebaseio.com',
+      projectId: 'referee-60959',
+      storageBucket: 'referee-60959.appspot.com',
+      messagingSenderId: '881564158476'
+    };
+
+    firebase.initializeApp(config);
+  }
+
   render() {
     // temporary solution for ignoring yellow warning
     // "Warning: BackAndroid is deprecated. Please ...."
@@ -40,11 +31,10 @@ class App extends Component {
     // "Remote debugger is in a background tab which may cause apps to ...."
     console.ignoredYellowBox = ['Remote debugger'];
 
-
     return (
-        <View style={{ flex: 1 }}>
-          <RouterS />
-        </View>
+      <Provider store={store}>
+        <RouterS />
+      </Provider>
     );
   }
 }
