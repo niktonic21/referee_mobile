@@ -7,18 +7,8 @@ import { CardItem, Button, Spinner } from '../reusable';
 
 class Login extends Component {
 
-  state = { loggedIn: null };
-
-  componentWillMount() {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDYFLQYIcPzj1j-J6hO87hPAOoyKb5TTH4',
-      authDomain: 'referee-60959.firebaseapp.com',
-      databaseURL: 'https://referee-60959.firebaseio.com',
-      projectId: 'referee-60959',
-      storageBucket: 'referee-60959.appspot.com',
-      messagingSenderId: '881564158476'
-    });
-
+componentWillMount() {
+  this.state = { loggedIn: null };
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ loggedIn: true });

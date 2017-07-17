@@ -1,47 +1,28 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { emailChanged, passwordChanged, loginUser } from '../../actions';
 import { Card, CardItem, Button, Input, Divider, Spinner } from '../reusable';
 
 
 class LoginForm extends Component {
-  state = { email: '', password: '', error: '', loading: 'false' };
 
   onButtonPress() {
-    const { email, password } = this.state;
-
-    this.setState({ error: '', loading: true });
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(this.onLoginSucces.bind(this))
-      .catch(() => {
-        console.log('FAILeriks');
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(this.onLoginSucces.bind(this))
-          .catch(this.onLoginFail.bind(this));
-      });
+    const { email, password } = this.props;
+    this.props.loginUser({ email, password });
   }
 
-  onLoginFail() {
-    console.log('FAIL');
-    this.setState({
-      loading: false,
-      error: 'Prihlásenie neúspešne.'
-    });
+  onEmailChange(text) {
+      this.props.emailChanged(text);
   }
 
-  onLoginSucces() {
-    console.log('SUC');
-    this.setState({
-       error: '',
-       loading: false,
-       email: '',
-       password: '',
-      });
+  onPasswordChange(text) {
+      this.props.passwordChanged(text);
   }
+
 
   renderButton() {
-    if (this.state.loading === true) {
+    if (this.props.loading === true) {
       return <Spinner size='small' />;
     }
     return (
@@ -75,8 +56,8 @@ class LoginForm extends Component {
               <Input
                 placeholder={'meno@email.sk'}
                 label={'Email'}
-                value={this.state.email}
-                onChangeText={email => this.setState({ email })}
+                value={this.props.email}
+                onChangeText={this.onEmailChange.bind(this)}
               />
             </CardItem>
             <Divider orientation={'horizontal'} length={300} color={'black'} />
@@ -85,13 +66,13 @@ class LoginForm extends Component {
                 secureTextEntry
                 placeholder={'heslo'}
                 label={'Heslo'}
-                value={this.state.password}
-                onChangeText={password => this.setState({ password })}
+                value={this.props.password}
+                onChangeText={this.onPasswordChange.bind(this)}
               />
             </CardItem>
             <Divider orientation={'horizontal'} length={300} color={'black'} />
-            <Text style={{ fontSize: 20, alignSelf: 'center', color: 'red' }}>
-              {this.state.error}
+            <Text style={{ fontSize: 20, alignSelf: 'center', marginTop: 4, color: 'red' }}>
+              {this.props.error}
             </Text>
             <CardItem styl={{ margin: 10 }}>
               {this.renderButton()}
@@ -103,4 +84,10 @@ class LoginForm extends Component {
 
 }
 
-export default LoginForm;
+const mapStateToProps = ({ auth }) => {
+  const { email, password, error, loading } = auth;
+  return { email, password, error, loading };
+};
+
+export default connect(mapStateToProps,
+  { emailChanged, passwordChanged, loginUser })(LoginForm);

@@ -5,7 +5,7 @@ class Zapasy extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1,padding:64 }}>
+      <View style={{ flex: 1 }}>
           <Text>
                 tu mam zapasiky
           </Text>
