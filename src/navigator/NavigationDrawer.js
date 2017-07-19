@@ -23,7 +23,7 @@ class NavigationDrawer extends React.Component {
         panCloseMask={0.2}
         negotiatePan
         tweenHandler={(ratio) => ({
-          main: { opacity: Math.max(0.54, 1 - ratio) },
+          main: { paddingTop: ratio * 20 },
         })}
       >
         <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />

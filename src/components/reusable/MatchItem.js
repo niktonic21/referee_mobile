@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Card from './Card';
-import CardItem from './CardItem';
-import Divider from './Divider';
+import { Card } from './Card';
+import { CardItem } from './CardItem';
+import { Divider } from './Divider';
 
 const MatchItem = () => {
   return(
-    <Card flexDirection={'row'} >
+    <Card flexDir={'row'} >
       <CardItem>
         <Text style={{margin: 5}}>SN - LM</Text>
         <Text style={{margin: 5}}>STEEL ARENA KE</Text>
@@ -31,4 +31,4 @@ const styles = {
   }
 };
 
-export default { MatchItem };
+export default MatchItem;
