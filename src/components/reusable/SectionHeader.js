@@ -17,4 +17,4 @@ const styles = {
   }
 }
 
-export { SectionHeader };
+export default SectionHeader;

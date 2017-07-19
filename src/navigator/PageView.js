@@ -40,7 +40,9 @@ const styles = {
    },
    container: {
       flex: 1,
-      flexDirection: 'row'
+      width: 375 * 2,
+      flexDirection: 'row',
+      backgroundColor: 'black'
    },
   buttonText: {
     textAlign: 'left',
