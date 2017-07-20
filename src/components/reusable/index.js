@@ -6,3 +6,4 @@ export * from './SectionHeader';
 export * from './MatchItem';
 export * from './Input';
 export * from './Spinner';
+export * from './DrawerButton';

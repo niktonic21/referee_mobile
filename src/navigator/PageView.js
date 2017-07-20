@@ -1,33 +1,71 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { DrawerButton } from '../components/reusable';
 
 const PageView = () => {
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
         <Text style={styles.title}>Hlavné Menu</Text>
-
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => {
+        <DrawerButton
+            text={'Login'}
+            onPress={() => {
               Actions.login();
               setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
             }}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => {
-            Actions.zapasy();
-            setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
-          }}
-        >
-          <Text style={styles.buttonText}>Zapasy</Text>
-        </TouchableOpacity>
-
+        />
+        <DrawerButton
+            text={'Zápasy'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <DrawerButton
+            text={'Profil'}
+            onPress={() => {
+              Actions.login();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <DrawerButton
+            text={'Štatistiky'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <DrawerButton
+            text={'PDF'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <View style={{padding: 30}}/>
+        <Text style={styles.title}>Ostatné</Text>
+        <DrawerButton
+            text={'Štadióny'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <DrawerButton
+            text={'Všetky zápasy'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
+        <DrawerButton
+            text={'Nastavenia'}
+            onPress={() => {
+              Actions.zapasy();
+              setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
+            }}
+        />
       </View>
     </View>
   );
@@ -35,14 +73,17 @@ const PageView = () => {
 
 const styles = {
    menu: {
-     flex: 1,
-     flexDirection: 'column'
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
    },
    container: {
       flex: 1,
-      width: 375 * 2,
-      flexDirection: 'row',
-      backgroundColor: 'black'
+      flexDirection: 'column',
+      backgroundColor: '#505050',
+      width: 800,
+      paddingTop: 40,
    },
   buttonText: {
     textAlign: 'left',

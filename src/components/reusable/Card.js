@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
-const Card = ({ flexDir, children }) => {
+const Card = ({ flexDir, aligning, children }) => {
  const direction = flexDir ? { flexDirection: flexDir } : { flexDirection: 'column' };
-
+ const align = aligning ? { alignItems: aligning } : { alignItems: 'center' }
   return (
-    <View style={[styles.containerCard, direction]}>
+    <View style={[styles.containerCard, direction, align]}>
       {children}
     </View>
   );
@@ -13,11 +13,8 @@ const Card = ({ flexDir, children }) => {
 
 const styles = {
   containerCard: {
-    margin: 5,
-    padding: 5,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    borderRadius: 9,
-    alignItems: 'center',
+    margin: 3,
+    padding: 3,
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 5 },
     // shadowOpacity: 0.3,
