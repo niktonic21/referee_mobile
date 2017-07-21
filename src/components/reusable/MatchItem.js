@@ -6,21 +6,30 @@ import { Divider } from './Divider';
 
 const MatchItem = () => {
   return(
-    <Card flexDir={'row'} >
-      <CardItem>
-        <Text style={{margin: 5}}>SN - LM</Text>
-        <Text style={{margin: 5}}>STEEL ARENA KE</Text>
-        <Text style={{margin: 5}}>PIATOK O PIATEJ</Text>
-      </CardItem>
-      <Divider orientation={'vertical'} length={70} color={'black'}/>
-      <CardItem>
-        <Text style={styles.font}>Rozhodca1</Text>
-        <Text style={styles.font}>Rozhodca1</Text>
-        <Text style={styles.font}>Rozhodca2</Text>
-        <Text style={styles.font}>Rozhodca2</Text>
-        <Text style={styles.font}>Rozhodca3</Text>
-        <Text style={styles.font}>Rozhodca3</Text>
-      </CardItem>
+    <Card
+      flexDir={'column'}
+      aligning={'baseline'}
+    >
+      <Card
+        flexDir={'row'}
+        aligning={'center'}
+      >
+        <CardItem>
+          <Text style={{margin: 5}}>SN - LM</Text>
+          <Text style={{margin: 5}}>STEEL ARENA KE</Text>
+          <Text style={{margin: 5}}>PIATOK O PIATEJ</Text>
+        </CardItem>
+        <Divider orientation={'vertical'} length={70} color={'black'}/>
+        <CardItem>
+          <Text style={styles.font}>Rozhodca1</Text>
+          <Text style={styles.font}>Rozhodca1</Text>
+          <Text style={styles.font}>Rozhodca2</Text>
+          <Text style={styles.font}>Rozhodca2</Text>
+          <Text style={styles.font}>Rozhodca3</Text>
+          <Text style={styles.font}>Rozhodca3</Text>
+        </CardItem>
+      </Card>
+      <Divider orientation={'horizontal'} length={340} color={'black'}/>
     </Card>
   );
 };
@@ -31,4 +40,4 @@ const styles = {
   }
 };
 
-export default MatchItem;
+export { MatchItem };

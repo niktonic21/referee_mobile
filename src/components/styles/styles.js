@@ -10,3 +10,13 @@ export const loginStyle = {
 export const routerStyle = {
 
 };
+
+export const drawerStyle = {
+  main: {
+    shadowColor: '#000000',
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    backgroundColor: '#505050',
+  },
+  drawer: {},
+};

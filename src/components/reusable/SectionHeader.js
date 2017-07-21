@@ -5,7 +5,7 @@ import Card from './Card';
 const SectionHeader = (props) => {
   return(
       <View style={[styles.containerCard,props.style]}>
-        <Text>{props.title}</Text>
+        <Text style={{color: 'white'}} >{props.title}</Text>
       </View>
   );
 };
@@ -13,8 +13,8 @@ const SectionHeader = (props) => {
 const styles = {
   containerCard: {
     padding: 10,
-    backgroundColor: 'rgb(102,178,255)',
+    backgroundColor: '#D65153',
   }
 }
 
-export default SectionHeader;
+export { SectionHeader };
