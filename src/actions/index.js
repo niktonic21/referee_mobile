@@ -5,7 +5,8 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
-  LOGIN_USER
+  LOGIN_USER,
+  LOGGED_IN_CHANGE
  } from './types';
 
 export const emailChanged = (text) => {
@@ -34,6 +35,13 @@ export const loginUser = ({ email, password }) => {
           .then(user => loginUserSuccess(dispatch, user))
            .catch(() => loginUserFail(dispatch));
        });
+  };
+};
+
+export const loggedInChange = (usr, lgdIn) => {
+  return {
+    type: LOGGED_IN_CHANGE,
+    payload: { usr, lgdIn }
   };
 };
 

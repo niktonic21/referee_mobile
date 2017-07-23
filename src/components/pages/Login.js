@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import firebase from 'firebase';
+import { connect } from 'react-redux';
 import { loginStyle } from '../styles/styles';
+import { loggedInChange } from '../../actions';
 import LoginForm from '../ui/LoginForm';
 import { CardItem, Button, Spinner } from '../reusable';
 
 class Login extends Component {
 
 componentWillMount() {
-  this.state = { loggedIn: null };
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ loggedIn: true });
+        this.props.loggedInChange(user, this.props.loggedIn = true);
       } else {
-        this.setState({ loggedIn: false });
+        this.props.loggedInChange(user, this.props.loggedIn = false);
       }
     });
   }
 
   renderContent() {
-    switch (this.state.loggedIn) {
+    switch (this.props.loggedIn) {
       case true:
         return (
           <CardItem styl={{ margin: 10 }}>
@@ -48,4 +49,9 @@ componentWillMount() {
 
 }
 
-export default Login;
+const mapStateToProps = ({ auth }) => {
+  const { user, loggedIn } = auth;
+  return { user, loggedIn };
+};
+
+export default connect(mapStateToProps, { loggedInChange })(Login);
