@@ -3,7 +3,8 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
-  LOGIN_USER
+  LOGIN_USER,
+  LOGGED_IN_CHANGE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
     user: null,
     error: '',
     loading: false,
+    loggedIn: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,6 +28,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case LOGIN_USER_FAIL:
       return { ...state, error: 'Prihlásenie neúspešne.', password: '', loading: false };
+    case LOGGED_IN_CHANGE: {
+      const { usr, lgdIn } = action.payload;
+      return { ...state, user: usr, loggedIn: lgdIn };
+    }
     default:
       return state;
   }
