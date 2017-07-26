@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { loginStyle } from '../styles/styles';
@@ -41,9 +41,13 @@ componentWillMount() {
 
   render() {
     return (
-      <View style={loginStyle.containerStyle}>
-          {this.renderContent()}
-      </View>
+      <ScrollView style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior='position'>
+          <View style={loginStyle.containerStyle}>
+              {this.renderContent()}
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 

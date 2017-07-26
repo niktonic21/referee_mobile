@@ -1,11 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import Drawer from 'react-native-drawer';
 import { DefaultRenderer, Actions } from 'react-native-router-flux';
-import { drawerStyle } from '../components/styles/styles'
-//import SideDrawerContent from './SideDrawerContent'
-import PageView from './PageView'
+import { drawerStyle } from '../components/styles/styles';
+import PageView from './PageView';
 
-class NavigationDrawer extends React.Component {
+class NavigationDrawer extends Component {
 
   render() {
     const state = this.props.navigationState;

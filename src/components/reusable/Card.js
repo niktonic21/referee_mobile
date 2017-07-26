@@ -13,9 +13,14 @@ const Card = ({ flexDir, aligning, children }) => {
 
 const styles = {
   containerCard: {
-    margin: 3,
+    flex: 1,
+    margin: 5,
     padding: 3,
-    // shadowColor: '#000',
+    backgroundColor: 'rgb(220,220,220)',
+    borderColor: 'rgb(164,164,164)',
+    borderRadius: 10,
+    borderWidth: 1,
+    shadowColor: '#000',
     // shadowOffset: { width: 0, height: 5 },
     // shadowOpacity: 0.3,
     // shadowRadius: 2
