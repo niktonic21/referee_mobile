@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { DrawerButton } from '../components/reusable';
 
@@ -25,7 +25,7 @@ const PageView = () => {
         <DrawerButton
             text={'Profil'}
             onPress={() => {
-              Actions.login();
+              Actions.profil();
               setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
             }}
         />
@@ -43,7 +43,7 @@ const PageView = () => {
               setTimeout(() => Actions.refresh({ key: 'drawer', open: false }), 0);
             }}
         />
-        <View style={{padding: 30}}/>
+        <View style={{ padding: 30 }} />
         <Text style={styles.title}>Ostatné</Text>
         <DrawerButton
             text={'Štadióny'}

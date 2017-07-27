@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { loginStyle } from '../styles/styles';
 import { emailChanged, passwordChanged, loginUser } from '../../actions';
-import { Card, CardItem, Button, Input, Divider, Spinner } from '../reusable';
+import { Card, CardItem, Button, Input, Spinner } from '../reusable';
 
 
 class LoginForm extends Component {
@@ -40,8 +41,6 @@ class LoginForm extends Component {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          marginLeft: 10,
-          marginRight: 10
         }}
       >
       <View
@@ -56,21 +55,21 @@ class LoginForm extends Component {
               <Input
                 placeholder={'meno@email.sk'}
                 label={'Email'}
+                styleContainer={loginStyle.inputContainer}
                 value={this.props.email}
                 onChangeText={this.onEmailChange.bind(this)}
               />
             </CardItem>
-            <Divider orientation={'horizontal'} length={300} color={'black'} />
             <CardItem >
               <Input
                 secureTextEntry
                 placeholder={'heslo'}
                 label={'Heslo'}
                 value={this.props.password}
+                styleContainer={loginStyle.inputContainer}
                 onChangeText={this.onPasswordChange.bind(this)}
               />
             </CardItem>
-            <Divider orientation={'horizontal'} length={300} color={'black'} />
             <Text style={{ fontSize: 20, alignSelf: 'center', marginTop: 4, color: 'red' }}>
               {this.props.error}
             </Text>
