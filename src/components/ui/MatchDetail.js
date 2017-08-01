@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, SectionList } from 'react-native';
 import { MatchItem, SectionHeader } from '../reusable';
 
-const MatchDetail = (props) => {
+const MatchDetail = ({placeholder, data}) => {
   return(
     <SectionList
-      renderItem={({item}) => <MatchItem/> }
+      renderItem={({item}) => <MatchItem placeholder={placeholder} data={item} /> }
       renderSectionHeader={({section}) => <SectionHeader title={section.title}/>}
-      sections={props.data}
+      sections={data}
     />
   );
 };
