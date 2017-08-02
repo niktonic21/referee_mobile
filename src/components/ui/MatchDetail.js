@@ -5,7 +5,7 @@ import { MatchItem, SectionHeader } from '../reusable';
 const MatchDetail = ({placeholder, data}) => {
   return(
     <SectionList
-      renderItem={({item}) => <MatchItem placeholder={placeholder} data={item} /> }
+      renderItem={({item}) => <MatchItem data={item} /> }
       renderSectionHeader={({section}) => <SectionHeader title={section.title}/>}
       sections={data}
     />
