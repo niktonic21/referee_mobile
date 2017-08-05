@@ -9,34 +9,39 @@ const createRefereeName = (referee) => {
 }
 
 const MatchItem = ({data, placeholder}) => {
-  const {cas, ciarovy1, ciarovy2, hlavny1, hlavny2, instruktor, datum, den, domaci, hostia, stadion} = data;
-  const emptyList =
-  <Card
-    flexDir={'row'}
-    aligning={'center'}
-  >
-    <View style={{height: 86}}/>
-  </Card>;
-  const fullList =
-    <Card
-      flexDir={'row'}
-      aligning={'center'}
-    >
-        <CardItem>
-          <Text style={{margin: 5}}>{domaci} - {hostia}</Text>
-          <Text style={{margin: 5}}>{stadion}</Text>
-          <Text style={{margin: 5}}>{datum} o {cas}</Text>
-        </CardItem>
-        <Divider orientation={'vertical'} length={70} color={'black'}/>
-        <CardItem>
-          <Text style={styles.font}>{createRefereeName(ciarovy1)}</Text>
-          <Text style={styles.font}>{createRefereeName(ciarovy2)}</Text>
-          <Text style={styles.font}>{createRefereeName(hlavny1)}</Text>
-          <Text style={styles.font}>{createRefereeName(hlavny2)}</Text>
-          <Text style={styles.font}>{createRefereeName(instruktor)}</Text>
-        </CardItem>
-    </Card>;
-  return (placeholder ? emptyList : fullList);
+  if (!placeholder) {
+    const {cas, ciarovy1, ciarovy2, hlavny1, hlavny2, instruktor, datum, den, domaci, hostia, stadion} = data;
+      return (
+      <Card
+        flexDir={'row'}
+        aligning={'center'}
+      >
+          <CardItem>
+            <Text style={{margin: 5}}>{domaci} - {hostia}</Text>
+            <Text style={{margin: 5}}>{stadion}</Text>
+            <Text style={{margin: 5}}>{datum} o {cas}</Text>
+          </CardItem>
+          <Divider orientation={'vertical'} length={70} color={'black'}/>
+          <CardItem>
+            <Text style={styles.font}>{createRefereeName(ciarovy1)}</Text>
+            <Text style={styles.font}>{createRefereeName(ciarovy2)}</Text>
+            <Text style={styles.font}>{createRefereeName(hlavny1)}</Text>
+            <Text style={styles.font}>{createRefereeName(hlavny2)}</Text>
+            <Text style={styles.font}>{createRefereeName(instruktor)}</Text>
+          </CardItem>
+      </Card>
+    );
+  } else {
+    return (
+      <Card
+        flexDir={'row'}
+        aligning={'center'}
+      >
+        <View style={{height: 91}}/>
+      </Card>
+    );
+  }
+
 };
 
 const styles = {
