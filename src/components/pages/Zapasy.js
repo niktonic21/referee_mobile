@@ -1,20 +1,29 @@
 
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
 import MatchDetail from '../ui/MatchDetail';
 import { MatchItem } from '../reusable/MatchItem';
-import {ListPlaceholder} from '../reusable/ListPlaceholder';
-import { getDelegation } from '../../actions';
-import { connect } from 'react-redux';
+import { ListPlaceholder } from '../reusable/ListPlaceholder';
+import { getDelegation, loggedInChange, profileFetchData } from '../../actions';
 
 class Zapasy extends Component {
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.getDelegation(1);
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.props.loggedInChange(user, this.props.loggedIn = true);
+          this.props.profileFetchData();
+        } else {
+          this.props.loggedInChange(user, this.props.loggedIn = false);
+        }
+      });
   }
 
   convertArrayToMap(array, category) {
-    let categoryMap = {};
+    const categoryMap = {};
     const sections = [];// Create the blank map
     array.forEach(item => {
       if (!categoryMap[item[category]]) {
@@ -24,13 +33,13 @@ class Zapasy extends Component {
       categoryMap[item[category]].push(item);
     });
 
-    const result = sections.map((sec, index) => {
-      let sekcia = {};
+  const result = sections.map((sec, index) => {
+      const sekcia = {};
       sekcia.title = sec;
       sekcia.data = categoryMap[sec];
       sekcia.key = String(index);
-      return sekcia
-    })
+      return sekcia;
+      });
     return result;
   }
 
@@ -39,8 +48,8 @@ class Zapasy extends Component {
     const item = <MatchItem placeholder='true' />;
     return (
       delegacia === null ? <ListPlaceholder size={5} view={item} /> :
-      <View style={{flex: 1}}>
-        <MatchDetail data={this.convertArrayToMap(delegacia,'liga')}/>
+      <View style={{ flex: 1 }}>
+        <MatchDetail data={this.convertArrayToMap(delegacia, 'liga')} />
       </View>
     );
   }
@@ -50,4 +59,6 @@ const mapStateToProps = ({ data }) => {
   const { delegation } = data;
   return { delegation };
 };
-export default connect (mapStateToProps, { getDelegation })(Zapasy);
+
+export default connect(mapStateToProps,
+   { getDelegation, loggedInChange, profileFetchData })(Zapasy);

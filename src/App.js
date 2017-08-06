@@ -1,11 +1,9 @@
 // app.js
 import React, { Component } from 'react';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import firebase from 'firebase';
 import RouterS from './navigator/RouterS';
-import configureStore from './configureStore';
-
-const store = configureStore({});
+import store from './store';
 
 class App extends Component {
 

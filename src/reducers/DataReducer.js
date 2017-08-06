@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_SUCCES: {
-      return { ...state, delegation: action.payload}
+      return { ...state, delegation: action.payload };
     }
     default:
       return state;
