@@ -31,7 +31,7 @@ class Profil extends Component {
                   label={'rozhodca'}
                   onChangeText={text => this.props.profileUpdate({ prop: 'rozhodca', value: text })}
                   placeholder={'Zadajte typ rozhodcu'}
-                  editable={this.props.editable}
+                  editable={this.props.editable || false}
                   value={this.props.rozhodca}
               />
               <Input
@@ -41,7 +41,7 @@ class Profil extends Component {
                   label={'liga'}
                   onChangeText={text => this.props.profileUpdate({ prop: 'liga', value: text })}
                   placeholder={'Zadajte max. ligu'}
-                  editable={this.props.editable}
+                  editable={this.props.editable || false}
                   value={this.props.liga}
               />
               <Input
@@ -51,7 +51,7 @@ class Profil extends Component {
                   label={'mesto'}
                   onChangeText={text => this.props.profileUpdate({ prop: 'mesto', value: text })}
                   placeholder={'Zadajte svoje mesto/obec '}
-                  editable={this.props.editable}
+                  editable={this.props.editable || false}
                   value={this.props.mesto}
               />
               <Input
@@ -61,7 +61,7 @@ class Profil extends Component {
                   label={'auto'}
                   onChangeText={text => this.props.profileUpdate({ prop: 'auto', value: text })}
                   placeholder={'Zadajte ŠPZ vozidla'}
-                  editable={this.props.editable}
+                  editable={this.props.editable || false}
                   value={this.props.auto}
               />
               <Input
@@ -71,7 +71,7 @@ class Profil extends Component {
                   label={'email'}
                   onChangeText={text => this.props.profileUpdate({ prop: 'email', value: text })}
                   placeholder={'Zadajte svoj email'}
-                  editable={this.props.editable}
+                  editable={this.props.editable || false}
                   value={this.props.email}
               />
           </Card>
