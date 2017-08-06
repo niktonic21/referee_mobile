@@ -17,10 +17,10 @@ class RouterS extends Component {
     StatusBar.setBarStyle('dark-content', true);
     return (
       <Router
-        titleStyle={{ color: 'white' }}
-        rightButtonTextStyle={{ color: 'white' }}
-        leftButtonIconStyle={{ tintColor: 'white' }}
-        navigationBarStyle={{ backgroundColor: 'rgb(83,83,83)', }}
+        titleStyle={{ color: 'black' }}
+        rightButtonTextStyle={{ color: 'black' }}
+        leftButtonIconStyle={{ tintColor: 'black' }}
+        navigationBarStyle={{ backgroundColor: 'white', }}
       >
         <Scene
           key="drawer"
