@@ -4,7 +4,7 @@ import { Card } from './Card';
 import { CardItem } from './CardItem';
 import { Divider } from './Divider';
 import { createRefereeName, parseDate, numberToMonth } from '../../utils/Utils';
-
+import { listStyle } from '../styles/styles';
 const MatchItem = ({ data, placeholder }) => {
   if (!placeholder) {
     const {
@@ -33,30 +33,20 @@ const MatchItem = ({ data, placeholder }) => {
           </CardItem>
           <Divider orientation={'vertical'} length={90} color={'black'} />
           <CardItem style={{ flex: 2, alignItems: 'flex-start' }}>
-            <Text style={styles.font}>{createRefereeName(ciarovy1)}</Text>
-            <Text style={styles.font}>    {createRefereeName(ciarovy2)}</Text>
-            <Text style={styles.font}>{createRefereeName(hlavny1)}</Text>
-            <Text style={styles.font}>    {createRefereeName(hlavny2)}</Text>
-            <Text style={styles.font}>{createRefereeName(instruktor)}</Text>
+          <Text style={listStyle.font}>{createRefereeName(hlavny1)}</Text>
+          <Text style={listStyle.font}>    {createRefereeName(hlavny2)}</Text>
+            <Text style={listStyle.font}>{createRefereeName(ciarovy1)}</Text>
+            <Text style={listStyle.font}>    {createRefereeName(ciarovy2)}</Text>
+            <Text style={listStyle.font}>{createRefereeName(instruktor)}</Text>
           </CardItem>
       </Card>
     );
   } else {
     return (
-      <Card
-        flexDir={'row'}
-        aligning={'center'}
-      >
+      <Card>
         <View style={{ height: 91 }} />
       </Card>
     );
-  }
-};
-
-const styles = {
-  font: {
-    fontSize: 10,
-    lineHeight: 18
   }
 };
 
