@@ -5,3 +5,6 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
 export const LOGGED_IN_CHANGE = 'logged_in_change';
 export const FETCH_SUCCES = 'fetch_success';
+
+export const PROFILE_UPDATE = 'profile_update';
+export const PROFILE_EDITABLE = 'profile_editable';
