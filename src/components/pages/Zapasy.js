@@ -30,6 +30,7 @@ class Zapasy extends Component {
         sections.push(item[category]);
         categoryMap[item[category]] = [];
       }
+      item.key = item.cislo;
       categoryMap[item[category]].push(item);
     });
 
@@ -39,7 +40,7 @@ class Zapasy extends Component {
       sekcia.data = categoryMap[sec];
       sekcia.key = String(index);
       return sekcia;
-      });
+    });
     return result;
   }
 
@@ -47,8 +48,8 @@ class Zapasy extends Component {
     const delegacia = this.props.delegation;
     const item = <MatchItem placeholder='true' />;
     return (
-      delegacia === null ? <ListPlaceholder size={5} view={item} /> :
-      <View style={{ flex: 1 }}>
+      delegacia === null ? <ListPlaceholder size={6} view={item} /> :
+      <View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
         <MatchDetail data={this.convertArrayToMap(delegacia, 'liga')} />
       </View>
     );

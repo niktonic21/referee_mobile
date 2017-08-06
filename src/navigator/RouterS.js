@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { Scene, Router } from 'react-native-router-flux';
-//import Icon from 'react-native-vector-icons/FontAwesome';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
@@ -15,7 +14,7 @@ import SetRouter from './SetRouter';
 
 class RouterS extends Component {
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     return (
       <Router
         titleStyle={{ color: 'white' }}
