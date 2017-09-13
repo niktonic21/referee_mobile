@@ -7,6 +7,7 @@ import MatchDetail from '../ui/MatchDetail';
 import { MatchItem } from '../reusable/MatchItem';
 import { ListPlaceholder } from '../reusable/ListPlaceholder';
 import { getDelegation, loggedInChange, profileFetchData } from '../../actions';
+import { convertArrayToMap, getSections } from '../../utils/Utils';
 
 class Zapasy extends Component {
 
@@ -22,37 +23,22 @@ class Zapasy extends Component {
       });
   }
 
-  convertArrayToMap(array, category) {
-    const categoryMap = {};
-    const sections = [];// Create the blank map
-    array.forEach(item => {
-      if (!categoryMap[item[category]]) {
-        sections.push(item[category]);
-        categoryMap[item[category]] = [];
-      }
-      item.key = item.cislo;
-      categoryMap[item[category]].push(item);
-    });
-
-  const result = sections.map((sec, index) => {
-      const sekcia = {};
-      sekcia.title = sec;
-      sekcia.data = categoryMap[sec];
-      sekcia.key = String(index);
-      return sekcia;
-    });
-    return result;
-  }
-
   render() {
+    // const filterData = [{ sectionItems: [
+    //   { label: '1', value: '1' }] },
+    //   { sectionItems: [{ label: '2', value: '2' }] },
+    //   { sectionItems: [{ label: '3', value: '3' }] }
+    // ];
     const delegacia = this.props.delegation;
+    const matchData = delegacia === null ? null : convertArrayToMap(delegacia, 'liga');
+    const filterData = matchData === null ? [{ sectionItems: [{ label: '', value: '' }] }] :
+     [{ sectionItems: getSections(matchData) }];
     const item = <MatchItem placeholder='true' />;
-    return (
-      delegacia === null ? <ListPlaceholder size={6} view={item} /> :
-      <View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
-        <MatchDetail data={this.convertArrayToMap(delegacia, 'liga')} />
-      </View>
-    );
+    const matches = delegacia === null ? <ListPlaceholder size={6} view={item} /> :
+    (<View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
+      <MatchDetail data={convertArrayToMap(delegacia, 'liga')} filterData={filterData} />
+    </View>);
+    return (matches);
   }
 
 }

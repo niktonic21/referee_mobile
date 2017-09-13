@@ -25,3 +25,34 @@ export const numberToMonth = (num) => {
     default: return '';
   }
 };
+
+export const convertArrayToMap = (array, category) => {
+  const categoryMap = {};
+  const sections = [];// Create the blank map
+  array.forEach(item => {
+    if (!categoryMap[item[category]]) {
+      sections.push(item[category]);
+      categoryMap[item[category]] = [];
+    }
+    item.key = item.cislo;
+    categoryMap[item[category]].push(item);
+  });
+
+const result = sections.map((sec, index) => {
+    const sekcia = {};
+    sekcia.title = sec;
+    sekcia.data = categoryMap[sec];
+    sekcia.key = String(index);
+    return sekcia;
+  });
+  return result;
+};
+
+export const getSections = (data) => {
+  return (
+      data.map(item => {
+      const sectionItem = { label: item.title, value: item.title };
+      return sectionItem;
+    })
+  );
+};

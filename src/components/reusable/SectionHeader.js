@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
-import Card from './Card';
 
 const SectionHeader = (props) => {
-  return(
-      <View style={[styles.containerCard,props.style]}>
-        <Text style={{color: 'white'}} >{props.title}</Text>
+  return (
+      <View style={[styles.containerCard, props.style]}>
+        <Text style={{ color: 'black' }} >{ props.title }</Text>
       </View>
   );
 };
@@ -13,8 +12,8 @@ const SectionHeader = (props) => {
 const styles = {
   containerCard: {
     padding: 10,
-    backgroundColor: '#D65153',
+    backgroundColor: '#b2b2b2'//'',
   }
-}
+};
 
 export { SectionHeader };
