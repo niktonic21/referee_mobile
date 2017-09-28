@@ -3,25 +3,38 @@
 */
 
 import React, { Component } from 'react';
-import { StatusBar } from 'react-native';
-import { connect } from 'react-redux';
+import { StatusBar, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Scene, Router } from 'react-native-router-flux';
-//import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
 import NavigationDrawer from './NavigationDrawer';
 import SetRouter from './SetRouter';
+import { filter } from '../actions';
 
 class RouterS extends Component {
+
+  renderRightButton() {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.props.filter(!this.props.filterSwitch);
+        }}
+      >
+        <Icon name='ios-funnel' size={24} color='black' />
+      </TouchableOpacity>
+    );
+  }
+
   render() {
-    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBarStyle('dark-content', true);
     return (
       <Router
-        titleStyle={{ color: 'white' }}
-        rightButtonTextStyle={{ color: 'white' }}
-        leftButtonIconStyle={{ tintColor: 'white' }}
-        navigationBarStyle={{ backgroundColor: 'rgb(83,83,83)', }}
+        titleStyle={{ color: 'black' }}
+        leftButtonIconStyle={{ tintColor: 'black' }}
+        navigationBarStyle={{ backgroundColor: '#D65153', borderBottomWidth: 0 }}
       >
         <Scene
           key="drawer"
@@ -33,9 +46,10 @@ class RouterS extends Component {
               component={Login} title="Login"
             />
             <Scene
-              key="zapasy" sceneStyle={{ paddingTop: 64,
-                backgroundColor: 'rgb(236,236,236)' }}
+              key="zapasy"
+              sceneStyle={{ paddingTop: 64, backgroundColor: 'rgb(236,236,236)' }}
               component={Zapasy} title="Zapasy" initial
+              renderRightButton={() => this.renderRightButton()}
             />
             <Scene
               key="profil"
@@ -55,4 +69,9 @@ class RouterS extends Component {
   }
 }
 
-export default RouterS;
+const mapStateToProps = ({ ui }) => {
+  const { filterSwitch } = ui;
+  return { filterSwitch };
+};
+
+export default connect(mapStateToProps, { filter })(RouterS);

@@ -16,7 +16,6 @@ const styles = {
     flex: 1,
     margin: 5,
     padding: 3,
-    //backgroundColor: 'rgb(200,200,200)',
     backgroundColor: 'white',
     borderColor: 'rgb(200,200,200)',
     borderWidth: 1,

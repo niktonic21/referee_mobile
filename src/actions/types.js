@@ -8,3 +8,4 @@ export const FETCH_SUCCES = 'fetch_success';
 
 export const PROFILE_UPDATE = 'profile_update';
 export const PROFILE_EDITABLE = 'profile_editable';
+export const FILTER_SWITCH = 'filter_switch';

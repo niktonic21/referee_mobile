@@ -70,3 +70,10 @@ export const drawerStyle = {
   },
   drawer: {},
 };
+
+export const listStyle = {
+  font: {
+    fontSize: 10,
+    lineHeight: 18
+  }
+}

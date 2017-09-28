@@ -11,6 +11,7 @@ export const ListPlaceholder = ({view, size}) => {
   const sections = [{ data, title }];
   return (
     <SectionList
+      style={{ backgroundColor: 'rgb(228, 228, 228)' }}
       renderItem={(item) => view }
       renderSectionHeader={(section) => <SectionHeader title={' '}/>}
       sections={sections}
