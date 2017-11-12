@@ -1,4 +1,10 @@
 {
   "name": "mobile_referee",
-  "displayName": "mobile_referee"
+  "displayName": "mobile_referee",
+  "expo": {
+    "name": "mobile_referee",
+    "slug": "mobile-referee",
+    "sdkVersion": "21.0.0",
+    "privacy": "public"
+  }
 }

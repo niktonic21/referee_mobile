@@ -5,15 +5,19 @@ import {
     View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import FilterTabHeader from './FilterTabHeader';
 
+const pickerHeight = 150;
 class HeadScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: new Animated.Value(-340),
+      height: new Animated.Value(this.props.headerHeight),
+      opacity: new Animated.Value(1), // The header opacity 
+      pickerSize: pickerHeight,     
       visible: true && this.props.filterSwitch,
     };
-    this.slideDuration = 500;
+    this.slideDuration = 600;
   }
 
   componentWillReceiveProps(newProps) {
@@ -46,32 +50,49 @@ class HeadScroll extends Component {
       duration: this.slideDuration,
       toValue: 0,
     }).start();
+    Animated.timing(this.state.opacity, {
+      duration: this.slideDuration,
+      toValue: 0,
+    }).start();
     this.setState({ visible: false && this.props.filterSwitch });
   }
 
-  headerOn() {
+  headerOn(extraHeight = 0) {
     Animated.timing(this.state.height, {
       duration: this.slideDuration,
-      toValue: this.props.headerHeight,
+      toValue: this.props.headerHeight + extraHeight,
+    }).start();
+    Animated.timing(this.state.opacity, {
+      duration: this.slideDuration,
+      toValue: 1,
     }).start();
     this.setState({ visible: true && this.props.filterSwitch });
   }
 
   render() {
-    console.log(this.state.visible);
-    const { headerComponent, ScrollableComponent } = this.props;
+    const { ScrollableComponent, filterData } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollableComponent
-          onScroll={this.onScroll.bind(this)}
-          {...this.props}
-        >
-          <View style={{ marginTop: this.props.headerHeight }}>
+        <Animated.View style={[{ top: this.state.height }]}>
+          <ScrollableComponent
+            onScroll={this.onScroll.bind(this)}
+            {...this.props}
+          >
             {this.props.children}
-          </View>
-        </ScrollableComponent>
-        <Animated.View style={[styles.header, { marginTop: this.state.height }]}>
-          {headerComponent}
+          </ScrollableComponent>
+        </Animated.View>
+        <Animated.View 
+            style={[styles.header, { height: this.state.height }, 
+                  { opacity: this.state.opacity }]}
+        >
+          <FilterTabHeader
+            headerHeight={pickerHeight} 
+            isVisible={(isOpen) => {
+              this.headerOn(isOpen);
+            }}
+            closeHeader={this.state.visible}
+            filterData={filterData} 
+          />
         </Animated.View>
       </View>
     );

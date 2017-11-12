@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Picker } from 'react-native';
 
-
 class FilterHeader extends Component {
 
   constructor(props) {
@@ -13,7 +12,7 @@ class FilterHeader extends Component {
   pickerItems(items) {
     return (
       items.map(item =>
-        <Picker.Item label={item.label} value={item.value} />
+        <Picker.Item label={item.label} value={item.value} key={item.value} />
       )
     );
   }
@@ -21,10 +20,14 @@ class FilterHeader extends Component {
   pickers(data) {
     return (
       data.map(item =>
-        <View style={{ flex: 1, flexDirection: 'column' }} >
+        <View style={{ flex: 1, height: 150, flexDirection: 'column' }} key={this.state.liga} >
           <Picker
             selectedValue={this.state.liga}
-            onValueChange={(itemValue) => this.setState({ liga: itemValue })}
+            onValueChange={(itemValue) => {
+              console.log(itemValue); 
+              this.props.selectedItem(itemValue);
+              this.setState({ liga: itemValue }); 
+            }}
           >
             {this.pickerItems(item.sectionItems)}
           </Picker>
@@ -37,8 +40,10 @@ class FilterHeader extends Component {
     const styles = {
       containerCard: {
         flex: 1,
-        padding: 10,
-        backgroundColor: '#D65153',
+        height: 150,
+        //marginTop: 50,
+        //backgroundColor: '#D65153',
+        backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'

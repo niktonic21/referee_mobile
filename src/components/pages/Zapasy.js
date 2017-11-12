@@ -6,21 +6,23 @@ import { View } from 'react-native';
 import MatchDetail from '../ui/MatchDetail';
 import { MatchItem } from '../reusable/MatchItem';
 import { ListPlaceholder } from '../reusable/ListPlaceholder';
-import { getDelegation, loggedInChange, profileFetchData } from '../../actions';
+import { getDelegation, getAllDelegation, loggedInChange, profileFetchData } from '../../actions';
 import { convertArrayToMap, getSections } from '../../utils/Utils';
 
 class Zapasy extends Component {
 
   componentWillMount() {
-    this.props.getDelegation(1);
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.props.loggedInChange(user, this.props.loggedIn = true);
-          this.props.profileFetchData();
-        } else {
-          this.props.loggedInChange(user, this.props.loggedIn = false);
-        }
-      });
+    this.props.getDelegation(2);
+//    console.log('ALL____', this.props.getAllDelegation());
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.props.loggedInChange(user, this.props.loggedIn = true);
+        this.props.profileFetchData();
+      } else {
+        this.props.loggedInChange(user, this.props.loggedIn = false);
+      }
+    });
   }
 
   render() {
@@ -33,11 +35,14 @@ class Zapasy extends Component {
     const matchData = delegacia === null ? null : convertArrayToMap(delegacia, 'liga');
     const filterData = matchData === null ? [{ sectionItems: [{ label: '', value: '' }] }] :
      [{ sectionItems: getSections(matchData) }];
+     console.log('FLITER', filterData);
     const item = <MatchItem placeholder='true' />;
-    const matches = delegacia === null ? <ListPlaceholder size={6} view={item} /> :
-    (<View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
-      <MatchDetail data={convertArrayToMap(delegacia, 'liga')} filterData={filterData} />
-    </View>);
+
+    const matches = delegacia === null ? 
+      <ListPlaceholder size={6} view={item} /> :
+        (<View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
+          <MatchDetail data={convertArrayToMap(delegacia, 'liga')} filterData={filterData} />
+        </View>);
     return (matches);
   }
 
@@ -48,4 +53,4 @@ const mapStateToProps = ({ data }) => {
 };
 
 export default connect(mapStateToProps,
-   { getDelegation, loggedInChange, profileFetchData })(Zapasy);
+   { getDelegation, getAllDelegation, loggedInChange, profileFetchData })(Zapasy);
