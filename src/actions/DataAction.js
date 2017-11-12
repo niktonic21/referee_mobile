@@ -22,7 +22,7 @@ export const getAllDelegation = () => {
     //                 .catch((error) => { console.error(error); });
     //         });
 
-        console.log('HHH', result = []);
+        //console.log('HHH', result = []);
  return result;
 };
 
@@ -35,7 +35,6 @@ export const getDelegation = id => {
 };
 
 const setDelegation = del => {
-  console.log('HEY___', del);
   return {
     type: FETCH_SUCCES_DELEGATION,
     payload: del

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
 //import 'expo';
-import RouterS from './navigator/RouterS';
-import store from './store';
+import RouterS from './src/navigator/RouterS';
+import store from './src/store';
 
 
 class App extends Component {
@@ -40,3 +40,4 @@ class App extends Component {
 }
 
 export default App;
+

@@ -3,16 +3,16 @@
 */
 
 import React, { Component } from 'react';
-import { StatusBar, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StatusBar, TouchableOpacity, Text } from 'react-native';
+//import Icon from 'react-native-vector-icons/Ionicons';
 import { Scene, Router, Drawer, Tabs } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
-import MenuIcon from '../../assets/images/menu_burger.png';
-import NavigationDrawer from './NavigationDrawer';
-import DrawerContent from './DrawerContent';
+//import MenuIcon from '../../assets/images/menu_burger.png';
+//import NavigationDrawer from './NavigationDrawer';
+//import DrawerContent from './DrawerContent';
 import SetRouter from './SetRouter';
 import { filter } from '../actions';
 
@@ -25,7 +25,7 @@ class RouterS extends Component {
           this.props.filter(!this.props.filterSwitch);
         }}
       >
-        <Icon name='ios-funnel' size={24} color='black' />
+        <Text> FILTER </Text>
       </TouchableOpacity>
     );
   }
@@ -38,10 +38,7 @@ class RouterS extends Component {
         leftButtonIconStyle={{ tintColor: 'black' }}
         navigationBarStyle={{ backgroundColor: '#D65153', borderBottomWidth: 0 }}
       >
-        <Scene
-          key="drawer"
-          component={NavigationDrawer} open={false}
-        >
+    
         <Scene key="main" tabs >
             <Scene
               key="login"
@@ -64,7 +61,6 @@ class RouterS extends Component {
                 set.profileEdit();
               }}
             />
-            </Scene>
             </Scene>
          </Router>
     );
