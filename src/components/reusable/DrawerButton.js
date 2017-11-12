@@ -1,18 +1,17 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Divider } from './Divider';
+//import { Divider } from './Divider';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const DrawerButton = ({ onPress, text }) => {
   const { buttonStyle, textStyle } = styles;
   return (
     <TouchableOpacity onPress={onPress} style={buttonStyle}>
-      <View style={{flexDirection: 'row', width: 150}}>
+      <View style={{ flexDirection: 'row', width: 150 }}>
         <Text style={textStyle}>
           {text}
         </Text>
-        <Icon name='ios-arrow-forward' size={24} color='grey' >
-        </Icon>
+        <Icon name='ios-arrow-forward' size={24} color='grey' />
       </View>
     </TouchableOpacity>
   );
@@ -24,15 +23,15 @@ const styles = {
     alignSelf: 'flex-start',
     color: 'white',
     fontSize: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
+    //paddingTop: 10,
+    //paddingBottom: 10,
     fontWeight: '500',
     paddingTop: 3,
     paddingBottom: 3
   },
   buttonStyle: {
     flex: 1,
-    alignSelf: 'stretch',
+    //alignSelf: 'stretch',
     maxHeight: 45,
     alignSelf: 'baseline',
     backgroundColor: 'rgba(0,0,0,0)',
@@ -43,7 +42,5 @@ const styles = {
     paddingTop: 10,
   }
 };
-
-
 
 export { DrawerButton };

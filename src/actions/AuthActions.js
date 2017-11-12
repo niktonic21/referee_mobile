@@ -7,10 +7,7 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER,
   LOGGED_IN_CHANGE,
-  GET_DELEGATION,
-  FETCH_SUCCES
  } from './types';
-import { getDelegationList } from '../api/Observer';
 
 export const emailChanged = (text) => {
   return {
@@ -47,21 +44,6 @@ export const loggedInChange = (usr, lgdIn) => {
     payload: { usr, lgdIn }
   };
 };
-
-export const getDelegation = id => {
-  return (dispatch) => {
-    getDelegationList(id).then(res => dispatch(setDelegation(res))).catch((error) => {
-        console.error(error);
-    });
-  }
-}
-
-const setDelegation = del => {
-  return {
-    type: FETCH_SUCCES,
-    payload: del
-  }
-}
 
 const loginUserSuccess = (dispatch, user) => {
   dispatch({

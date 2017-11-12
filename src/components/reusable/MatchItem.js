@@ -5,7 +5,7 @@ import { CardItem } from './CardItem';
 import { Divider } from './Divider';
 import { createRefereeName, parseDate, numberToMonth } from '../../utils/Utils';
 import { listStyle } from '../styles/styles';
-const MatchItem = ({ data, placeholder }) => {
+const MatchItem = ({ data, placeholder, key }) => {
   if (!placeholder) {
     const {
       cas,
@@ -25,6 +25,7 @@ const MatchItem = ({ data, placeholder }) => {
       <Card
         flexDir={'row'}
         aligning={'center'}
+        key={key}
       >
           <CardItem style={{ flex: 3 }}>
             <Text style={{ margin: 5 }}>{domaci} - {hostia}</Text>

@@ -5,12 +5,14 @@
 import React, { Component } from 'react';
 import { StatusBar, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Scene, Router } from 'react-native-router-flux';
+import { Scene, Router, Drawer, Tabs } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
+import MenuIcon from '../../assets/images/menu_burger.png';
 import NavigationDrawer from './NavigationDrawer';
+import DrawerContent from './DrawerContent';
 import SetRouter from './SetRouter';
 import { filter } from '../actions';
 
@@ -40,7 +42,7 @@ class RouterS extends Component {
           key="drawer"
           component={NavigationDrawer} open={false}
         >
-          <Scene key="main" tabs >
+        <Scene key="main" tabs >
             <Scene
               key="login"
               component={Login} title="Login"
@@ -62,9 +64,9 @@ class RouterS extends Component {
                 set.profileEdit();
               }}
             />
-          </Scene>
-        </Scene>
-      </Router>
+            </Scene>
+            </Scene>
+         </Router>
     );
   }
 }
