@@ -6,18 +6,16 @@ import HeadScroll from './HeadScroll';
 //import FilterTabHeader from './FilterTabHeader';
 
 const MatchDetail = ({ data, filterData }) => {
-  //const header = <FilterTabHeader headerHeight={150} data={filterData} />;
-  
-  return (
-    <HeadScroll
-       ScrollableComponent={SectionList}
-       headerHeight={50}
-       filterData={filterData}
-       renderItem={({ item, key }) => <MatchItem data={item} key={key} />}
-       renderSectionHeader={({ section }) => <SectionHeader title={section.title} />}
-       sections={data}
-    />
-  );
+    return (
+        <HeadScroll
+            ScrollableComponent={SectionList}
+            headerHeight={50}
+            filterData={filterData}
+            renderItem={({ item, key }) => (item ? <MatchItem data={item} key={key} /> : null)}
+            renderSectionHeader={({ section }) => <SectionHeader title={section.title} />}
+            sections={data.slice(1)} //slice "Liga"
+        />
+    );
 };
 
 export default MatchDetail;
