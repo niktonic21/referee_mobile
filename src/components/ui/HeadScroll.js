@@ -17,7 +17,17 @@ class HeadScroll extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.filterSwitch) {
+        if (this.props.sections.length > 0 && this.props.sections !== newProps.sections) {
+            if (
+                this.refs._scrollView &&
+                this.refs._scrollView._wrapperListRef._listRef._scrollRef
+            ) {
+                this.refs._scrollView._wrapperListRef._listRef._scrollRef.scrollTo({
+                    x: 0,
+                    y: 0,
+                    animated: false
+                });
+            }
             //this.headerOn();
         } else {
             // this.headerOff();
@@ -72,14 +82,17 @@ class HeadScroll extends Component {
         const { ScrollableComponent, filterData } = this.props;
         return (
             <View style={styles.container}>
-                <Animated.View style={[{ top: this.state.height }]}>
-                    <ScrollableComponent onScroll={this.onScroll.bind(this)} {...this.props}>
-                        {this.props.children || (
-                            <View>
-                                <Text>HI </Text>
-                            </View>
-                        )}
-                    </ScrollableComponent>
+                <Animated.View style={[styles.topBox, { top: this.state.height }]}>
+                    {this.props.sections.length > 0 ? (
+                        <ScrollableComponent
+                            ref="_scrollView"
+                            style={{ flex: 1 }}
+                            onScroll={this.onScroll.bind(this)}
+                            {...this.props}
+                        />
+                    ) : (
+                        <Text style={styles.noDataText}> Žiadne zápasy.</Text>
+                    )}
                 </Animated.View>
                 <Animated.View
                     style={[
@@ -119,5 +132,15 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         overflow: 'hidden'
+    },
+    topBox: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flex: 1
+    },
+    noDataText: {
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginTop: 100
     }
 });

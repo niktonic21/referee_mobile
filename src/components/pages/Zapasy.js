@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { View, SectionList } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { MatchItem, SectionHeader } from '../reusable';
 import HeadScroll from '../ui/HeadScroll';
 import { ListPlaceholder } from '../reusable/ListPlaceholder';
@@ -11,7 +11,8 @@ import {
     loggedInChange,
     profileFetchData,
     loadOfflineDeleg,
-    loadOfflineReferee
+    loadOfflineReferee,
+    filterChanged
 } from '../../redux/actions';
 import { dividedIntoSections, filterDataForRender } from '../../utils/Utils';
 
@@ -20,21 +21,14 @@ class Zapasy extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderData: null
+            renderData: null,
+            scrollListToTop: false
         };
     }
 
     componentWillMount() {
         this.props.loadOfflineDeleg();
         this.props.loadOfflineReferee();
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.props.loggedInChange(user, (this.props.loggedIn = true));
-                this.props.profileFetchData();
-            } else {
-                this.props.loggedInChange(user, (this.props.loggedIn = false));
-            }
-        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,9 +37,9 @@ class Zapasy extends Component {
             delegacia = dividedIntoSections(offlineDelegList);
         }
         if (offlineRefereeList && this.props.offlineRefereeList !== offlineRefereeList) {
+            this.filterData = [delegacia[1], delegacia[2], offlineRefereeList];
             this.delegacia = delegacia[0].slice(1); //default data
-            this.setState({ renderData: this.delegacia });
-            this.filterData = [delegacia[1], delegacia[2], offlineRefereeList]; //default data for filter
+            //this.setState({ renderData: filteredData });
         }
         if (this.props.filterValues !== filterValues) {
             const filteredData = filterDataForRender(
@@ -54,38 +48,52 @@ class Zapasy extends Component {
                 offlineRefereeList
             );
             this.setState({ renderData: filteredData });
-            console.log('filter', nextProps.filterValues, filteredData);
+            //console.log('filter', nextProps.filterValues, filteredData);
         }
     }
 
     render() {
         const itemPlaceholder = <MatchItem placeholder="true" />;
-        const matches =
-            this.state.renderData === null ? (
-                <ListPlaceholder size={6} view={itemPlaceholder} />
-            ) : (
-                <View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
-                    <HeadScroll
-                        ScrollableComponent={SectionList}
-                        headerHeight={50}
-                        filterData={this.filterData}
-                        renderItem={({ item, key }) => {
-                            return <MatchItem data={item} key={key} />;
-                        }}
-                        renderSectionHeader={({ section }) => (
-                            <SectionHeader title={section.title} />
-                        )}
-                        sections={this.state.renderData} //slice "Liga"
-                    />
-                </View>
-            );
-        return matches;
+        console.log('LOG', this.props.loggedIn);
+        if (this.state.renderData === null || this.props.loggedIn === null) {
+            return <ListPlaceholder size={6} view={itemPlaceholder} />;
+        }
+        return (
+            <View style={{ flex: 1, backgroundColor: 'rgb(228, 228, 228)' }}>
+                <HeadScroll
+                    ScrollableComponent={SectionList}
+                    headerHeight={50}
+                    filterData={this.filterData}
+                    keyExtractor={(item, index) => item.cislo}
+                    renderItem={({ item, key }) => {
+                        return (
+                            <MatchItem
+                                data={item}
+                                key={key}
+                                onPress={data => Actions.detail({ data })}
+                            />
+                        );
+                    }}
+                    renderSectionHeader={({ section }) => <SectionHeader title={section.title} />}
+                    sections={this.state.renderData} //slice "Liga"
+                />
+            </View>
+        );
     }
 }
-const mapStateToProps = ({ data, items }) => {
+const mapStateToProps = ({ data, items, auth }) => {
     const { delegation, delegations, filterValues } = data;
     const { offlineDelegList, offlineRefereeList } = items;
-    return { delegation, delegations, filterValues, offlineDelegList, offlineRefereeList };
+    const { user, loggedIn } = auth;
+    return {
+        delegation,
+        delegations,
+        filterValues,
+        offlineDelegList,
+        offlineRefereeList,
+        user,
+        loggedIn
+    };
 };
 
 export default connect(mapStateToProps, {
@@ -94,5 +102,6 @@ export default connect(mapStateToProps, {
     loggedInChange,
     profileFetchData,
     loadOfflineDeleg,
-    loadOfflineReferee
+    loadOfflineReferee,
+    filterChanged
 })(Zapasy);

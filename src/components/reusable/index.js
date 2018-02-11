@@ -5,6 +5,7 @@ export * from './Divider';
 export * from './SectionHeader';
 export * from './MatchItem';
 export * from './Input';
+export * from './InputDetial';
 export * from './Spinner';
 export * from './DrawerButton';
 export * from './FilterHeader';

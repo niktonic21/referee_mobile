@@ -5,6 +5,7 @@ import { loginStyle } from '../styles/styles';
 import { emailChanged, passwordChanged, loginUser } from '../../redux/actions';
 import { Card, CardItem, Button, Input, Spinner } from '../reusable';
 
+const LOG_IN = 'Prihlásenie';
 class LoginForm extends Component {
     onButtonPress() {
         const { email, password } = this.props;
@@ -24,8 +25,8 @@ class LoginForm extends Component {
             return <Spinner size="small" />;
         }
         return (
-            <Button onPress={this.onButtonPress.bind(this)} style={{ width: 200 }}>
-                Prihlásenie
+            <Button onPress={this.onButtonPress.bind(this)} style={{ width: 200, height: 50 }}>
+                {LOG_IN}
             </Button>
         );
     }
@@ -66,9 +67,18 @@ class LoginForm extends Component {
                             onChangeText={this.onPasswordChange.bind(this)}
                         />
                     </CardItem>
-                    <Text style={{ fontSize: 20, alignSelf: 'center', marginTop: 4, color: 'red' }}>
-                        {this.props.error}
-                    </Text>
+                    {this.props.error ? (
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                alignSelf: 'center',
+                                marginTop: 4,
+                                color: 'red'
+                            }}
+                        >
+                            {this.props.error}
+                        </Text>
+                    ) : null}
                     <CardItem styl={{ margin: 10 }}>{this.renderButton()}</CardItem>
                 </Card>
             </View>

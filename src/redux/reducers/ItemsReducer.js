@@ -24,7 +24,7 @@ export default function reducer(state = initialState, action) {
     //console.log(action);
     switch (action.type) {
         case ADD_DELEG_SUCCESS:
-            //list = state.onlineList.concat([action.itemData]).sort((a, b) => b.time - a.time);
+            //list = state.offlineDelegList.concat(action.delegData);
             return {
                 ...state,
                 onlineDelegList: action.delegData,
@@ -37,7 +37,7 @@ export default function reducer(state = initialState, action) {
                 onlineRefereeList: action.refereeData,
                 offlineRefereeList: action.refereeData
             };
-        case REMOVE_ITEM_SUCCESS:
+        case REMOVE_ITEM_SUCCESS: {
             list = state.onlineList.slice(0);
             const index = list.map(i => i.id).indexOf(action.id);
             list.splice(index, 1);
@@ -47,6 +47,7 @@ export default function reducer(state = initialState, action) {
                 onlineList: list,
                 offlineList: list
             };
+        }
         case OFFLINE_DELEG_LOADED:
             return {
                 ...state,

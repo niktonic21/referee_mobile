@@ -5,27 +5,44 @@
 import React, { Component } from 'react';
 import { StatusBar, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
+import firebase from 'firebase';
 import { connect } from 'react-redux';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
+import MatchDetail from '../components/pages/MatchDetail';
 import TabIcon from './TabIcon';
 import SetRouter from './SetRouter';
-import { filter, getAllDelegation } from '../redux/actions';
+import {
+    filter,
+    getAllDelegation,
+    filterChanged,
+    loggedInChange,
+    profileFetchData
+} from '../redux/actions';
 
 class RouterS extends Component {
     componentWillMount() {
-        //this.props.getAllDelegation();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.props.filterChanged('rozhodca', user.uid);
+                this.props.loggedInChange(user, (this.props.loggedIn = true));
+                this.props.profileFetchData();
+            } else {
+                this.props.filterChanged('rozhodca', 'Rozhodca');
+                this.props.loggedInChange(user, (this.props.loggedIn = false));
+            }
+        });
     }
 
     renderRightButton() {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.props.filter(!this.props.filterSwitch);
+                    //this.props.filter(!this.props.filterSwitch);
                 }}
             >
-                <Text> FILTER </Text>
+                <Text style={{ color: 'black', marginRight: 10 }}> FILTER </Text>
             </TouchableOpacity>
         );
     }
@@ -35,41 +52,69 @@ class RouterS extends Component {
         return (
             <Router
                 titleStyle={{ color: 'black' }}
-                leftButtonIconStyle={{ tintColor: 'black' }}
-                navigationBarStyle={{ backgroundColor: '#D65153', borderBottomWidth: 0 }}
+                leftButtonIconStyle={{ tintColor: 'black' }} //#c53211 red //#2A2F3A, #2e3830 grey
+                navigationBarStyle={{ backgroundColor: '#c53211', borderBottomWidth: 0 }}
             >
-                <Scene
-                    key="main"
-                    tabs
-                    tabBarStyle={styles.tabBarStyle}
-                    labelStyle={styles.labelStyle}
-                    inactiveTintColor={'black'}
-                    activeTintColor={'white'}
-                    indicatorStyle={{ backgroundColor: 'red' }}
-                >
+                <Scene key="root" hideNavBar>
                     <Scene
-                        key="zapasy"
-                        icon={TabIcon}
-                        sceneStyle={{ backgroundColor: 'rgb(236,236,236)' }}
-                        component={Zapasy}
-                        title="Zapasy"
-                        initial
-                        renderRightButton={() => this.renderRightButton()}
-                    />
-                    <Scene key="vyctovanie" icon={TabIcon} component={Login} title="Vyctovanie" />
-                    <Scene key="statistiky" icon={TabIcon} component={Login} title="Statistiky" />
-                    <Scene key="nastavenia" icon={TabIcon} component={Login} title="Nastavenia" />
+                        key="_main"
+                        tabs
+                        tabBarStyle={styles.tabBarStyle}
+                        labelStyle={styles.labelStyle}
+                        inactiveTintColor={'black'}
+                        activeTintColor={'white'}
+                        indicatorStyle={{ backgroundColor: 'red' }}
+                    >
+                        <Scene
+                            key="zapasy"
+                            icon={TabIcon}
+                            sceneStyle={{ backgroundColor: 'rgb(236,236,236)' }}
+                            component={Zapasy}
+                            title="Zapasy"
+                            initial
+                            renderRightButton={() => this.renderRightButton()}
+                        />
+                        <Scene
+                            key="vyctovanie"
+                            icon={TabIcon}
+                            component={Login}
+                            title="Vyctovanie"
+                        />
+                        <Scene
+                            key="statistiky"
+                            icon={TabIcon}
+                            component={Login}
+                            title="Statistiky"
+                        />
+                        <Scene
+                            key="nastavenia"
+                            icon={TabIcon}
+                            component={Login}
+                            title="Nastavenia"
+                        />
+                        <Scene
+                            key="profil"
+                            component={Profil}
+                            sceneStyle={{ backgroundColor: 'rgb(236,236,236)' }}
+                            title="Profil"
+                            rightTitle="Upravit"
+                            onRight={() => {
+                                const set = new SetRouter();
+                                set.profileEdit();
+                            }}
+                        />
+                    </Scene>
+
                     <Scene
-                        key="profil"
-                        component={Profil}
+                        key="detail"
+                        hideNavBar={false}
                         sceneStyle={{ backgroundColor: 'rgb(236,236,236)' }}
-                        title="Profil"
-                        rightTitle="Upravit"
-                        onRight={() => {
-                            const set = new SetRouter();
-                            set.profileEdit();
-                        }}
-                    />
+                        title="Detail Zápasu"
+                        back
+                        backButtonTintColor={'black'}
+                    >
+                        <Scene key="_detail" component={MatchDetail} />
+                    </Scene>
                 </Scene>
             </Router>
         );
@@ -96,4 +141,10 @@ const mapStateToProps = ({ ui }) => {
     return { filterSwitch };
 };
 
-export default connect(mapStateToProps, { filter, getAllDelegation })(RouterS);
+export default connect(mapStateToProps, {
+    filter,
+    getAllDelegation,
+    filterChanged,
+    loggedInChange,
+    profileFetchData
+})(RouterS);

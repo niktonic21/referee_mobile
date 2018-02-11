@@ -1,12 +1,12 @@
 export const createRefereeName = referee => {
-    return typeof referee === 'object'
+    return typeof referee === 'object' && referee.priezvisko && referee.meno
         ? referee.priezvisko + ' ' + referee.meno.substring(0, 1) + '. '
         : referee;
 };
 
 export const parseDate = date => {
-    const dataArray = date.split('.');
-    return { day: dataArray[0], month: dataArray[1], year: dataArray[2] };
+    const dataArray = date.split('-');
+    return { year: dataArray[0], month: dataArray[1], day: dataArray[2] };
 };
 
 export const numberToMonth2 = num => {
@@ -103,18 +103,19 @@ export const numberToMonth = num => {
 };
 
 export const ligueToLig = str => {
+    if (str === 'Liga') return 'Liga';
     if (str === 'Extraliga seniorov') return 'EXS';
     if (str === '1. Liga seniorov') return '1.LS';
-    if ('Extraliga juniorov' === str) return 'EXJ';
-    if ('Extraliga dorastu' === str) return 'EXD';
-    if ('1. Liga juniorov' === str) return '1.LJ';
-    if ('1. Liga dorastu' === str) return '1.LD';
-    if ('Kadeti' === str) return 'Kadeti';
-    if ('2. Liga seniorov' === str) return '2.LS';
-    if ('Extraliga žien' === str) return 'EXZ';
-    if ('Prípravné SVK' === str) return 'Príp. SVK';
-    if ('Prípravné IIHF' === str) return 'Príp. IIHF';
-    if ('Turnaje repre' === str) return 'Turnaje';
+    if (str === 'Extraliga juniorov') return 'EXJ';
+    if (str === 'Extraliga dorastu') return 'EXD';
+    if (str === '1. Liga juniorov') return '1.LJ';
+    if (str === '1. Liga dorastu') return '1.LD';
+    if (str === 'Kadeti') return 'Kadeti';
+    if (str === '2. Liga seniorov') return '2.LS';
+    if (str === 'Extraliga žien') return 'EXZ';
+    if (str === 'Prípravné SVK') return 'Príp. SVK';
+    if (str === 'Prípravné IIHF') return 'Príp. IIHF';
+    if (str === 'Turnaje repre') return 'Turnaje';
     return 'Ostatné';
 };
 
@@ -135,7 +136,7 @@ export const numberToLigue = num => {
 };
 
 export const dividedIntoSections = list => {
-    const categoryMap = {};
+    const categoryMap = [];
     const sections = ['Liga']; // Create the blank map
     const months = ['Mesiac'];
     Object.keys(list).forEach(key => {
@@ -152,7 +153,7 @@ export const dividedIntoSections = list => {
             // Create an entry in the map for the category if it hasn't yet been created
             categoryMap[category] = [];
         }
-        item.key = key;
+
         categoryMap[category].push(item);
     });
 
@@ -160,13 +161,14 @@ export const dividedIntoSections = list => {
         const section = {};
         section.title = sec;
         section.data = categoryMap[sec];
+
         return section;
     });
     return [result, sections, months];
 };
 
 export const filterDataForRender = (data, filter, refs) => {
-    //let result = null;
+    let result = [];
     let resultLiga = null;
     let resultMesiac = null;
     let resultRozhodca = null;
@@ -189,11 +191,20 @@ export const filterDataForRender = (data, filter, refs) => {
         resultMesiac = filterMonth(resultLiga, filt[1]);
     }
 
-    return resultMesiac;
+    resultMesiac.forEach(sec => {
+        const a = {};
+        a.title = sec.title;
+        a.data = sec.data.sort((item1, item2) => new Date(item2.datum) - new Date(item1.datum));
+        if (a.data.length > 0) {
+            result.push(a);
+        }
+    });
+
+    return result;
 };
 
 export const filterLigue = (data, liga) => {
-    return data.filter(item => item.title === liga);
+    return data.filter(item => item.title === liga).reverse();
 };
 
 export const filterMonth = (data, mesiac) => {
@@ -203,7 +214,6 @@ export const filterMonth = (data, mesiac) => {
         const a = {};
         a.title = sec.title;
         a.data = sec.data.filter(item => parseInt(parseDate(item.datum).month, 10) === numMonth);
-        console.log('numMonth', numMonth, a.title, a.data);
         if (a.data.length > 0) {
             result.push(a);
         }
@@ -217,10 +227,9 @@ export const filterRozhodca = (data, roz, refs) => {
     let ref = null;
     let BreakException = {};
     let matchIds = [];
-
     try {
         Object.entries(refs).forEach(([key, value]) => {
-            if (roz === value.priezvisko) {
+            if (roz === key) {
                 ref = value;
                 throw BreakException;
             }
@@ -244,12 +253,12 @@ export const filterRozhodca = (data, roz, refs) => {
             result.push(a);
         }
     });
-    console.log('AAAAA', matchIds, result);
+
     return result;
 };
 
 export const filterByNumberOfMatch = (item, matchIds) => {
-    if (matchIds[i] && matchIds[i] === item.key) {
+    if (matchIds[i] && matchIds[i] === item.cislo) {
         i++;
         return true;
     }

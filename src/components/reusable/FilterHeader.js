@@ -8,8 +8,21 @@ class FilterHeader extends Component {
             selected: ''
         };
     }
+
+    componentWillReceiveProps(nextProps) {
+        const val = nextProps.select && nextProps.select !== null ? nextProps.select : '';
+        this.setState({ selected: val });
+    }
+
     pickerItems(items) {
-        return items.map(item => <Picker.Item label={item} value={item} key={item} />);
+        return items.map(item => {
+            if (typeof item === 'string') {
+                return <Picker.Item label={item} value={item} key={item} />;
+            }
+            if (typeof item === 'object' && typeof item.label === 'string') {
+                return <Picker.Item label={item.label} value={item.value} key={item.value} />;
+            }
+        });
     }
 
     pickers(data) {

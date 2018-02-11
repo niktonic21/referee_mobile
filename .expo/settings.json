@@ -4,6 +4,6 @@
   "dev": true,
   "strict": false,
   "minify": false,
-  "urlType": "redirect",
+  "urlType": "exp",
   "urlRandomness": "gh-28n"
 }
