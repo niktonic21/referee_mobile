@@ -1,31 +1,42 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { fliterChanged } from '../../redux/actions/DataAction';
+import { filterChanged } from '../../redux/actions/DataAction';
 import { Button } from '../reusable';
-import { ligueToLig } from '../../utils/Utils';
+import { ligueToLig, createRefereeName } from '../../utils/Utils';
 import FilterHeader from '../reusable/FilterHeader';
 
 const idLiga = 0;
 const idMesiac = 1;
 const idRozhodca = 2;
-let offList = ['Rozhodca'];
+const ROZHODCA = 'Rozhodca';
+let offList = [{ value: ROZHODCA, label: ROZHODCA }];
 
 class FilterTabHeader extends Component {
     constructor(props) {
         super(props);
         this.buttonID = null;
-        this.pickerData = this.props.filterData[0];
-        Object.entries(this.props.filterData[2]).forEach(([key, value]) => {
-            offList.push(value.priezvisko);
-        });
+        this.pickerData = this.props.filterData[idLiga];
+        if (this.props.filterData[idRozhodca]) {
+            Object.entries(this.props.filterData[idRozhodca]).forEach(([key, value]) => {
+                const item = { value: key, label: createRefereeName(value) };
+                offList.push(item);
+            });
+        }
         this.state = {
             showPicker: false,
-            pickerData: this.props.filterData[0],
+            pickerData: this.props.filterData[idLiga],
             height: new Animated.Value(0),
             opacity: new Animated.Value(0),
             visible: false
         };
+    }
+
+    componentWillMount() {
+        if (this.props.loggedIn && this.props.user) {
+            const label = this.findRefLabel(this.props.user.uid);
+            this.setState({ pickerItemRozhodcaLabel: label });
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,24 +46,29 @@ class FilterTabHeader extends Component {
             });
             this.buttonID = null;
         }
+        if (this.props.loggedIn !== nextProps.loggedIn) {
+            const label = this.findRefLabel(nextProps.user ? nextProps.user.uid : null);
+            this.setState({ pickerItemRozhodcaLabel: label });
+        }
     }
 
     setPickerValue(value) {
         switch (this.buttonID) {
-            case 0: {
+            case idLiga: {
                 const val = ligueToLig(value);
-                this.setState({ pickerItemLiga: val });
-                this.props.fliterChanged('liga', value);
+                this.setState({ pickerItemLiga: value, pickerItemLigaLabel: val });
+                this.props.filterChanged('liga', value);
                 break;
             }
-            case 1: {
+            case idMesiac: {
                 this.setState({ pickerItemMesiac: value });
-                this.props.fliterChanged('mesiac', value);
+                this.props.filterChanged('mesiac', value);
                 break;
             }
-            case 2: {
-                this.setState({ pickerItemRozhodca: value });
-                this.props.fliterChanged('rozhodca', value);
+            case idRozhodca: {
+                const label = this.findRefLabel(value);
+                this.setState({ pickerItemRozhodca: value, pickerItemRozhodcaLabel: label });
+                this.props.filterChanged('rozhodca', value);
                 break;
             }
             default:
@@ -60,24 +76,30 @@ class FilterTabHeader extends Component {
         }
     }
 
+    findRefLabel(user) {
+        const value = offList.find(r => r.value === user);
+        const label = value ? value.label : ROZHODCA;
+        return label;
+    }
+
     selectPickerData(id) {
         if (id === idLiga) {
-            this.setState({ pickerData: this.props.filterData[0] });
+            this.setState({ pickerData: this.props.filterData[idLiga] });
         } else if (id === idMesiac) {
-            this.setState({ pickerData: this.props.filterData[1] });
+            this.setState({ pickerData: this.props.filterData[idMesiac] });
         } else {
             this.setState({ pickerData: offList });
         }
     }
 
-    showPicker(idBtn = 0) {
+    showPicker(idBtn = idLiga) {
         if (idBtn === this.buttonID || this.buttonID === null) {
             if (this.state.showPicker) {
                 this.setState({
                     showPicker: false
                 });
                 this.headerOff();
-                this.buttonID = null;
+                setTimeout(() => (this.buttonID = null), 100);
             } else {
                 this.setState({
                     showPicker: true
@@ -119,10 +141,28 @@ class FilterTabHeader extends Component {
     }
 
     renderFilter() {
+        let val;
+        switch (this.buttonID) {
+            case idLiga: {
+                val = this.state.pickerItemLiga;
+                break;
+            }
+            case idMesiac: {
+                val = this.state.pickerItemMesiac;
+                break;
+            }
+            case idRozhodca: {
+                val = this.state.pickerItemRozhodca;
+                break;
+            }
+            default:
+                val = '';
+        }
         return (
             <FilterHeader
                 selectedItem={value => this.setPickerValue(value)}
                 data={this.state.pickerData}
+                select={val}
             />
         );
     }
@@ -136,7 +176,7 @@ class FilterTabHeader extends Component {
                         }}
                         style={styles.buttons}
                     >
-                        {this.state.pickerItemLiga || 'Liga'}
+                        {this.state.pickerItemLigaLabel || 'Liga'}
                     </Button>
                     <Button
                         onPress={() => {
@@ -152,7 +192,7 @@ class FilterTabHeader extends Component {
                         }}
                         style={styles.buttons}
                     >
-                        {this.state.pickerItemRozhodca || 'Rozhodca'}
+                        {this.state.pickerItemRozhodcaLabel || ROZHODCA}
                     </Button>
                 </View>
                 <Animated.View
@@ -169,12 +209,14 @@ class FilterTabHeader extends Component {
     }
 }
 
-const mapStateToProps = ({ ui }) => {
+const mapStateToProps = ({ ui, auth, data }) => {
+    const { filterValues } = data;
     const { filterSwitch } = ui;
-    return { filterSwitch };
+    const { user, loggedIn } = auth;
+    return { filterSwitch, user, loggedIn, filterValues };
 };
 
-export default connect(mapStateToProps, { fliterChanged })(FilterTabHeader);
+export default connect(mapStateToProps, { filterChanged })(FilterTabHeader);
 
 const styles = StyleSheet.create({
     container: {
@@ -190,7 +232,7 @@ const styles = StyleSheet.create({
         maxHeight: 50,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'black',
+        //backgroundColor: 'white',
         paddingVertical: 5,
         paddingHorizontal: 5
     },
@@ -204,10 +246,10 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flex: 1,
-        backgroundColor: 'red',
+        backgroundColor: '#c53211',
         width: Dimensions.get('window').width / 3 - 5,
         height: 30,
         marginRight: 5,
-        borderColor: 'red'
+        borderColor: '#c53211'
     }
 });

@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { FILTER_CHANGED, FETCH_SUCCES_DELEGATION, FETCH_ALL_DELEGATIONS } from './types';
 import { getDelegationList, getData, getDelegat } from '../../api/Observer';
 
-export const fliterChanged = (key, value) => {
+export const filterChanged = (key, value) => {
     return {
         type: FILTER_CHANGED,
         payload: { key, value }

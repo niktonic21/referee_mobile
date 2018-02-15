@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { loginStyle, profileStyle } from '../styles/styles';
@@ -7,7 +7,7 @@ import { profileUpdate } from '../../redux/actions';
 
 const avatar = require('../../../assets/images/avatar.png');
 
-class Profil extends Component {
+class Profil extends PureComponent {
     render() {
         return (
             <ScrollView style={{ flex: 1 }}>

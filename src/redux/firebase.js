@@ -13,7 +13,9 @@ const firebaseApp = initializeApp({
     databaseURL: 'https://referee-60959.firebaseio.com',
     projectId: 'referee-60959',
     storageBucket: 'referee-60959.appspot.com',
-    messagingSenderId: '881564158476'
+    messagingSenderId: '881564158476',
+    persistence: true,
+    debug: __DEV__ ? '*' : false
 });
 export const delegationRef = firebaseApp.database().ref('/seasons/20172018');
 export const refereesRef = firebaseApp.database().ref('/referees');
