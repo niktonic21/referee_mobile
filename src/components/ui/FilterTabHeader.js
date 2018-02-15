@@ -9,7 +9,8 @@ import FilterHeader from '../reusable/FilterHeader';
 const idLiga = 0;
 const idMesiac = 1;
 const idRozhodca = 2;
-let offList = [{ value: 'Rozhodca', label: 'Rozhodca' }];
+const ROZHODCA = 'Rozhodca';
+let offList = [{ value: ROZHODCA, label: ROZHODCA }];
 
 class FilterTabHeader extends Component {
     constructor(props) {
@@ -33,8 +34,8 @@ class FilterTabHeader extends Component {
 
     componentWillMount() {
         if (this.props.loggedIn && this.props.user) {
-            const val = offList.find(r => r.value === this.props.user.uid);
-            this.setState({ pickerItemRozhodcaLabel: val.label });
+            const label = this.findRefLabel(this.props.user.uid);
+            this.setState({ pickerItemRozhodcaLabel: label });
         }
     }
 
@@ -45,11 +46,9 @@ class FilterTabHeader extends Component {
             });
             this.buttonID = null;
         }
-        if (nextProps.user && this.props.loggedIn !== nextProps.loggedIn) {
-            const val = offList.find(r => r.value === nextProps.user.uid);
-            this.setState({ pickerItemRozhodcaLabel: val.label });
-        } else {
-            this.setState({ pickerItemRozhodcaLabel: 'Rozhodca' });
+        if (this.props.loggedIn !== nextProps.loggedIn) {
+            const label = this.findRefLabel(nextProps.user ? nextProps.user.uid : null);
+            this.setState({ pickerItemRozhodcaLabel: label });
         }
     }
 
@@ -67,14 +66,20 @@ class FilterTabHeader extends Component {
                 break;
             }
             case idRozhodca: {
-                const val = offList.find(r => r.value === value);
-                this.setState({ pickerItemRozhodca: value, pickerItemRozhodcaLabel: val.label });
+                const label = this.findRefLabel(value);
+                this.setState({ pickerItemRozhodca: value, pickerItemRozhodcaLabel: label });
                 this.props.filterChanged('rozhodca', value);
                 break;
             }
             default:
                 break;
         }
+    }
+
+    findRefLabel(user) {
+        const value = offList.find(r => r.value === user);
+        const label = value ? value.label : ROZHODCA;
+        return label;
     }
 
     selectPickerData(id) {
@@ -187,7 +192,7 @@ class FilterTabHeader extends Component {
                         }}
                         style={styles.buttons}
                     >
-                        {this.state.pickerItemRozhodcaLabel || 'Rozhodca'}
+                        {this.state.pickerItemRozhodcaLabel || ROZHODCA}
                     </Button>
                 </View>
                 <Animated.View

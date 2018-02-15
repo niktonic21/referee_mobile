@@ -87,6 +87,8 @@ class HeadScroll extends Component {
                         <ScrollableComponent
                             ref="_scrollView"
                             style={{ flex: 1 }}
+                            automaticallyAdjustContentInsets
+                            contentInsetAdjustmentBehavior={'automatic'}
                             onScroll={this.onScroll.bind(this)}
                             {...this.props}
                         />

@@ -70,9 +70,10 @@ class LoginForm extends Component {
                     {this.props.error ? (
                         <Text
                             style={{
-                                fontSize: 20,
+                                fontSize: 14,
                                 alignSelf: 'center',
-                                marginTop: 4,
+                                marginVertical: 5,
+                                marginHorizontal: 20,
                                 color: 'red'
                             }}
                         >

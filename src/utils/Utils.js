@@ -190,7 +190,6 @@ export const filterDataForRender = (data, filter, refs) => {
     } else {
         resultMesiac = filterMonth(resultLiga, filt[1]);
     }
-
     resultMesiac.forEach(sec => {
         const a = {};
         a.title = sec.title;
@@ -238,17 +237,20 @@ export const filterRozhodca = (data, roz, refs) => {
         if (e !== BreakException) throw e;
     }
 
+    if (ref === null) return data;
+
     Object.entries(ref.zapasy).forEach(([key, value]) => {
         Object.entries(value).forEach(([keys]) => {
             matchIds.push(keys);
         });
     });
-
     i = 0;
     data.forEach(sec => {
         const a = {};
         a.title = sec.title;
-        a.data = sec.data.filter(item => filterByNumberOfMatch(item, matchIds));
+        a.data = sec.data
+            .sort((i1, i2) => i1.cislo - i2.cislo)
+            .filter(item => filterByNumberOfMatch(item, matchIds));
         if (a.data.length > 0) {
             result.push(a);
         }
@@ -265,31 +267,31 @@ export const filterByNumberOfMatch = (item, matchIds) => {
     return false;
 };
 
-export const convertArrayToMap = (array, category) => {
-    const categoryMap = {};
-    const sections = []; // Create the blank map
-    array.forEach(item => {
-        if (!categoryMap[item[category]]) {
-            sections.push(item[category]);
-            categoryMap[item[category]] = [];
-        }
-        item.key = item.cislo;
-        categoryMap[item[category]].push(item);
-    });
+// export const convertArrayToMap = (array, category) => {
+//     const categoryMap = {};
+//     const sections = []; // Create the blank map
+//     array.forEach(item => {
+//         if (!categoryMap[item[category]]) {
+//             sections.push(item[category]);
+//             categoryMap[item[category]] = [];
+//         }
+//         item.key = item.cislo;
+//         categoryMap[item[category]].push(item);
+//     });
 
-    const result = sections.map((sec, index) => {
-        const sekcia = {};
-        sekcia.title = sec;
-        sekcia.data = categoryMap[sec];
-        sekcia.key = String(index);
-        return sekcia;
-    });
-    return result;
-};
+//     const result = sections.map((sec, index) => {
+//         const sekcia = {};
+//         sekcia.title = sec;
+//         sekcia.data = categoryMap[sec];
+//         sekcia.key = String(index);
+//         return sekcia;
+//     });
+//     return result;
+// };
 
-export const getSections = data => {
-    return data.map(item => {
-        const sectionItem = { label: item.title, value: item.title };
-        return sectionItem;
-    });
-};
+// export const getSections = data => {
+//     return data.map(item => {
+//         const sectionItem = { label: item.title, value: item.title };
+//         return sectionItem;
+//     });
+// };

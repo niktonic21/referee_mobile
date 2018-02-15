@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Text } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { loginStyle } from '../styles/styles';
@@ -24,6 +24,9 @@ class Login extends Component {
             case true:
                 return (
                     <CardItem styl={{ margin: 10 }}>
+                        <Text style={{ marginVertical: 10 }}>
+                            Prihláseny: {this.props.user.displayName}
+                        </Text>
                         <Button
                             onPress={() => firebase.auth().signOut()}
                             styl={{ width: 200, height: 70 }}

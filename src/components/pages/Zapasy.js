@@ -38,12 +38,10 @@ class Zapasy extends Component {
         }
         if (offlineRefereeList && this.props.offlineRefereeList !== offlineRefereeList) {
             this.filterData = [delegacia[1], delegacia[2], offlineRefereeList];
-            this.delegacia = delegacia[0].slice(1); //default data
-            //this.setState({ renderData: filteredData });
         }
         if (this.props.filterValues !== filterValues) {
             const filteredData = filterDataForRender(
-                this.delegacia,
+                delegacia[0].slice(1),
                 filterValues,
                 offlineRefereeList
             );
@@ -54,7 +52,6 @@ class Zapasy extends Component {
 
     render() {
         const itemPlaceholder = <MatchItem placeholder="true" />;
-        console.log('LOG', this.props.loggedIn);
         if (this.state.renderData === null || this.props.loggedIn === null) {
             return <ListPlaceholder size={6} view={itemPlaceholder} />;
         }
