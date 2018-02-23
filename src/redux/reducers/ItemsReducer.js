@@ -20,8 +20,6 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     let list;
-
-    //console.log(action);
     switch (action.type) {
         case ADD_DELEG_SUCCESS:
             //list = state.offlineDelegList.concat(action.delegData);

@@ -21,13 +21,11 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, delegat: action.payload };
         }
         case FETCH_ALL_DELEGATIONS: {
-            console.log('season2017');
             return { ...state, delegations: action.payload };
             //return { ...state };
         }
         case FILTER_CHANGED: {
             const { key, value } = action.payload;
-            console.log('Filter', key, value);
             return { ...state, filterValues: { ...state.filterValues, [key]: value } };
         }
         default:

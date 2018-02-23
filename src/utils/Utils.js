@@ -9,6 +9,23 @@ export const parseDate = date => {
     return { year: dataArray[0], month: dataArray[1], day: dataArray[2] };
 };
 
+const defaultListMonth = [
+    'Neznáme',
+    'Júl',
+    'August',
+    'September',
+    'Október',
+    'November',
+    'December',
+    'Január',
+    'Február',
+    'Marec',
+    'Apríl',
+    'Máj',
+    'Jún',
+    'Mesiac'
+];
+
 export const numberToMonth2 = num => {
     switch (num) {
         case 1:
@@ -157,6 +174,8 @@ export const dividedIntoSections = list => {
         categoryMap[category].push(item);
     });
 
+    //moths sorter
+
     const result = sections.map(sec => {
         const section = {};
         section.title = sec;
@@ -164,7 +183,42 @@ export const dividedIntoSections = list => {
 
         return section;
     });
-    return [result, sections, months];
+    return [result, sections, monthSorter(months)];
+};
+
+export const monthSorter = months => {
+    const sortedMonths = [];
+    months.map(first => {
+        sortedMonths[defaultListMonth.findIndex(def => def === first)] = first;
+    });
+    return sortedMonths.filter(v => v).reverse();
+};
+
+export const dividedIntoMonthSections = (list, refIds) => {
+    const categoryMap = [];
+    const sections = []; // Create the blank map
+    const refreeMatches = Object.values(list).filter(result => refIds.includes(result.cislo));
+
+    refreeMatches.forEach(item => {
+        const category = numberToMonth2(parseInt(parseDate(item.datum).month, 10));
+
+        if (!categoryMap[category]) {
+            sections.push(category);
+            // Create an entry in the map for the category if it hasn't yet been created
+            categoryMap[category] = [];
+        }
+        categoryMap[category].push(item);
+    });
+
+    const monthSections = monthSorter(sections);
+    const result = monthSections.map(sec => {
+        const section = {};
+        section.title = sec;
+        section.data = categoryMap[sec];
+
+        return section;
+    });
+    return result;
 };
 
 export const filterDataForRender = (data, filter, refs) => {
@@ -217,33 +271,17 @@ export const filterMonth = (data, mesiac) => {
             result.push(a);
         }
     });
+
     return result;
 };
 
 let i = 0;
 export const filterRozhodca = (data, roz, refs) => {
     const result = [];
-    let ref = null;
-    let BreakException = {};
-    let matchIds = [];
-    try {
-        Object.entries(refs).forEach(([key, value]) => {
-            if (roz === key) {
-                ref = value;
-                throw BreakException;
-            }
-        });
-    } catch (e) {
-        if (e !== BreakException) throw e;
-    }
 
-    if (ref === null) return data;
+    const matchIds = findRozhodcaMatches(roz, refs);
+    if (matchIds === null) return data;
 
-    Object.entries(ref.zapasy).forEach(([key, value]) => {
-        Object.entries(value).forEach(([keys]) => {
-            matchIds.push(keys);
-        });
-    });
     i = 0;
     data.forEach(sec => {
         const a = {};
@@ -257,6 +295,28 @@ export const filterRozhodca = (data, roz, refs) => {
     });
 
     return result;
+};
+
+export const findRozhodcaMatches = (refID, refs) => {
+    let ref = null;
+    let BreakException = {};
+    let matchIds = [];
+    try {
+        Object.entries(refs).forEach(([key, value]) => {
+            if (refID === key) {
+                ref = value;
+                throw BreakException;
+            }
+        });
+    } catch (e) {
+        if (e !== BreakException) throw e;
+    }
+    Object.entries(ref.zapasy).forEach(([key, value]) => {
+        Object.entries(value).forEach(([keys]) => {
+            matchIds.push(keys);
+        });
+    });
+    return matchIds;
 };
 
 export const filterByNumberOfMatch = (item, matchIds) => {

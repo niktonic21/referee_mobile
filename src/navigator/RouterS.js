@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import Login from '../components/pages/Login';
 import Zapasy from '../components/pages/Zapasy';
 import Profil from '../components/pages/Profil';
+import Vyctovanie from '../components/pages/Vyuctovanie';
 import MatchDetail from '../components/pages/MatchDetail';
 import TabIcon from './TabIcon';
 import SetRouter from './SetRouter';
@@ -20,9 +21,12 @@ import {
     loggedInChange,
     profileFetchData
 } from '../redux/actions';
+import { numberToMonth2 } from '../utils/Utils';
 
 class RouterS extends Component {
     componentWillMount() {
+        const month = new Date().getMonth() + 1;
+        this.props.filterChanged('mesiac', numberToMonth2(month));
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.filterChanged('rozhodca', user.uid);
@@ -61,6 +65,7 @@ class RouterS extends Component {
                         tabs
                         tabBarStyle={styles.tabBarStyle}
                         labelStyle={styles.labelStyle}
+                        tabBarPosition={'bottom'}
                         inactiveTintColor={'black'}
                         activeTintColor={'white'}
                         indicatorStyle={{ backgroundColor: 'red' }}
@@ -77,7 +82,7 @@ class RouterS extends Component {
                         <Scene
                             key="vyctovanie"
                             icon={TabIcon}
-                            component={Login}
+                            component={Vyctovanie}
                             title="Vyctovanie"
                         />
                         <Scene
