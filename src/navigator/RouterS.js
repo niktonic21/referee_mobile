@@ -116,6 +116,10 @@ class RouterS extends Component {
             rightButtonTextStyle={styles.buttonTextStyle}
             title="Profil"
             rightTitle="Upraviť"
+            onBack={() => {
+              const set = new SetRouter();
+              set.saveData();
+            }}
             onRight={() => {
               const set = new SetRouter();
               set.profileEdit();

@@ -1,5 +1,7 @@
 import { Alert } from 'react-native';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
+
 import { profileUpdate } from '../redux/actions';
 import { store } from '../../App';
 
@@ -18,6 +20,15 @@ class SetRouter {
         { cancelable: true }
       );
     }
+  };
+
+  saveData = () => {
+    const profile = store.getState().profile;
+    if (profile.editable === true) {
+      store.dispatch(profileUpdate({ prop: 'editable', value: false }));
+      Actions.pop();
+    }
+    Actions.pop();
   };
 }
 

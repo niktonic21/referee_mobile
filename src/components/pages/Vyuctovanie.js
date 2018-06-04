@@ -59,7 +59,6 @@ class Vyuctovanie extends Component {
   });
 
   render() {
-    console.log('hhhh____log', this.props.loggedIn);
     if (this.props.loggedIn === null || !this.props.loggedIn) {
       return (
         <View style={{ flex: 1 }}>
