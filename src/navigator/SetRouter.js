@@ -27,8 +27,9 @@ class SetRouter {
     if (profile.editable === true) {
       store.dispatch(profileUpdate({ prop: 'editable', value: false }));
       Actions.pop();
+    } else {
+      Actions.pop();
     }
-    Actions.pop();
   };
 }
 
