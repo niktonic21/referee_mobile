@@ -9,7 +9,6 @@ import {
   getDelegation,
   getAllDelegation,
   loggedInChange,
-  profileFetchData,
   loadOfflineDeleg,
   loadOfflineReferee,
   filterChanged
@@ -94,7 +93,6 @@ export default connect(mapStateToProps, {
   getDelegation,
   getAllDelegation,
   loggedInChange,
-  profileFetchData,
   loadOfflineDeleg,
   loadOfflineReferee,
   filterChanged

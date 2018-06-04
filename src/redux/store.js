@@ -6,20 +6,20 @@ import syncOffline from './syncOffline';
 import { syncFirebase } from './firebase';
 
 export default function configureStore(initialState) {
-    const store = createStore(
-        reducer,
-        initialState,
-        composeWithDevTools(applyMiddleware(ReduxThunk))
-    );
-    syncOffline(store);
-    syncFirebase(store);
+  const store = createStore(
+    reducer,
+    initialState,
+    composeWithDevTools(applyMiddleware(ReduxThunk))
+  );
+  syncOffline(store);
+  syncFirebase(store);
 
-    if (module.hot) {
-        module.hot.accept(() => {
-            const nextRootReducer = require('./reducers/index').default;
-            store.replaceReducer(nextRootReducer);
-        });
-    }
+  if (module.hot) {
+    module.hot.accept(() => {
+      const nextRootReducer = require('./reducers/index').default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
-    return store;
+  return store;
 }

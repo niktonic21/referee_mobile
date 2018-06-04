@@ -7,6 +7,7 @@ export const LOGGED_IN_CHANGE = 'logged_in_change';
 
 export const PROFILE_UPDATE = 'profile_update';
 export const PROFILE_EDITABLE = 'profile_editable';
+export const PROFILE_CLEAR = 'profile_clear';
 export const FILTER_SWITCH = 'filter_switch';
 
 export const FILTER_CHANGED = 'filter_changed';
