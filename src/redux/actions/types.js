@@ -19,6 +19,7 @@ export const ADD_REFEREE_SUCCESS = 'add_referee_succes';
 export const REMOVE_ITEM_SUCCESS = 'remove_item_succes';
 export const OFFLINE_DELEG_LOADED = 'offline_deleg_loaded';
 export const OFFLINE_REFEREE_LOADED = 'offline_referee_loaded';
+export const TIMESTAMP_LOADED = 'timestamp_loaded';
 
 export const CONNECTION_CHECKING = 'connection_checking';
 export const CONNECTION_CHECKED = 'connection_checked';

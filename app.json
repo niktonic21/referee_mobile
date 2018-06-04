@@ -11,14 +11,14 @@
         "icon": "./assets/icon.png",
         "splash": {
             "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#ffffff"
+            "resizeMode": "cover"
         },
         "packagerOpts": {
             "assetExts": ["ttf", "mp4"]
         },
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "loadJSInBackgroundExperimental": true
         }
     }
 }

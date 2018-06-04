@@ -12,72 +12,67 @@ class Profil extends PureComponent {
         return (
             <ScrollView style={{ flex: 1 }}>
                 <KeyboardAvoidingView behavior="position">
-                    <View style={loginStyle.containerStyle}>
-                        <Card flexDir={'column'} styl={{ flex: 1, margin: 10 }}>
-                            <View style={profileStyle.imageContainer}>
-                                <Image style={profileStyle.image} source={avatar} />
-                            </View>
-                            <Text style={profileStyle.name}>Martin Jobbagy</Text>
-                            <Input
-                                styleLabel={profileStyle.inputLabel}
-                                styleInput={profileStyle.inputText}
-                                styleContainer={profileStyle.inputContainer}
-                                label={'rozhodca'}
-                                onChangeText={text =>
-                                    this.props.profileUpdate({ prop: 'rozhodca', value: text })}
-                                placeholder={'Zadajte typ rozhodcu'}
-                                editable={this.props.editable || false}
-                                value={this.props.rozhodca}
-                            />
-                            <Input
-                                styleLabel={profileStyle.inputLabel}
-                                styleInput={profileStyle.inputText}
-                                styleContainer={profileStyle.inputContainer}
-                                label={'liga'}
-                                onChangeText={text =>
-                                    this.props.profileUpdate({ prop: 'liga', value: text })}
-                                placeholder={'Zadajte max. ligu'}
-                                editable={this.props.editable || false}
-                                value={this.props.liga}
-                            />
-                            <Input
-                                styleLabel={profileStyle.inputLabel}
-                                styleInput={profileStyle.inputText}
-                                styleContainer={profileStyle.inputContainer}
-                                label={'mesto'}
-                                onChangeText={text =>
-                                    this.props.profileUpdate({ prop: 'mesto', value: text })}
-                                placeholder={'Zadajte svoje mesto/obec '}
-                                editable={this.props.editable || false}
-                                value={this.props.mesto}
-                            />
-                            <Input
-                                styleLabel={profileStyle.inputLabel}
-                                styleInput={profileStyle.inputText}
-                                styleContainer={profileStyle.inputContainer}
-                                label={'auto'}
-                                onChangeText={text =>
-                                    this.props.profileUpdate({ prop: 'auto', value: text })}
-                                placeholder={'Zadajte ŠPZ vozidla'}
-                                editable={this.props.editable || false}
-                                value={this.props.auto}
-                            />
-                            <Input
-                                styleLabel={profileStyle.inputLabel}
-                                styleInput={profileStyle.inputText}
-                                styleContainer={[
-                                    profileStyle.inputContainer,
-                                    { borderBottomWidth: 0 }
-                                ]}
-                                label={'email'}
-                                onChangeText={text =>
-                                    this.props.profileUpdate({ prop: 'email', value: text })}
-                                placeholder={'Zadajte svoj email'}
-                                editable={this.props.editable || false}
-                                value={this.props.email}
-                            />
-                        </Card>
-                    </View>
+                    <Card flexDir={'column'} styl={{ flex: 1, marginTop: 20 }}>
+                        <View style={profileStyle.imageContainer}>
+                            <Image style={profileStyle.image} source={avatar} />
+                        </View>
+                        <Text style={profileStyle.name}>Martin Jobbagy</Text>
+                        <Input
+                            styleLabel={profileStyle.inputLabel}
+                            styleInput={profileStyle.inputText}
+                            styleContainer={profileStyle.inputContainer}
+                            label={'rozhodca'}
+                            onChangeText={text =>
+                                this.props.profileUpdate({ prop: 'rozhodca', value: text })}
+                            placeholder={'Zadajte typ rozhodcu'}
+                            editable={this.props.editable || false}
+                            value={this.props.rozhodca}
+                        />
+                        <Input
+                            styleLabel={profileStyle.inputLabel}
+                            styleInput={profileStyle.inputText}
+                            styleContainer={profileStyle.inputContainer}
+                            label={'liga'}
+                            onChangeText={text =>
+                                this.props.profileUpdate({ prop: 'liga', value: text })}
+                            placeholder={'Zadajte max. ligu'}
+                            editable={this.props.editable || false}
+                            value={this.props.liga}
+                        />
+                        <Input
+                            styleLabel={profileStyle.inputLabel}
+                            styleInput={profileStyle.inputText}
+                            styleContainer={profileStyle.inputContainer}
+                            label={'mesto'}
+                            onChangeText={text =>
+                                this.props.profileUpdate({ prop: 'mesto', value: text })}
+                            placeholder={'Zadajte svoje mesto/obec '}
+                            editable={this.props.editable || false}
+                            value={this.props.mesto}
+                        />
+                        <Input
+                            styleLabel={profileStyle.inputLabel}
+                            styleInput={profileStyle.inputText}
+                            styleContainer={profileStyle.inputContainer}
+                            label={'auto'}
+                            onChangeText={text =>
+                                this.props.profileUpdate({ prop: 'auto', value: text })}
+                            placeholder={'Zadajte ŠPZ vozidla'}
+                            editable={this.props.editable || false}
+                            value={this.props.auto}
+                        />
+                        <Input
+                            styleLabel={profileStyle.inputLabel}
+                            styleInput={profileStyle.inputText}
+                            styleContainer={[profileStyle.inputContainer, { borderBottomWidth: 0 }]}
+                            label={'email'}
+                            onChangeText={text =>
+                                this.props.profileUpdate({ prop: 'email', value: text })}
+                            placeholder={'Zadajte svoj email'}
+                            editable={this.props.editable || false}
+                            value={this.props.email}
+                        />
+                    </Card>
                 </KeyboardAvoidingView>
             </ScrollView>
         );

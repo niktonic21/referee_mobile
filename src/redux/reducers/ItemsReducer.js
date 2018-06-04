@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
     ADD_DELEG_SUCCESS,
     ADD_REFEREE_SUCCESS,
@@ -7,7 +8,8 @@ import {
     CONNECTION_CHECKING,
     CONNECTION_CHECKED,
     CONNECTION_ONLINE,
-    CONNECTION_OFFLINE
+    CONNECTION_OFFLINE,
+    TIMESTAMP_LOADED
 } from '../actions/types';
 
 const initialState = {
@@ -15,26 +17,50 @@ const initialState = {
     offlineDelegList: [],
     onlineRefereeList: [],
     offlineRefereeList: [],
+    list: [],
+    timestamp: null,
     connectionChecked: false
 };
 
 export default function reducer(state = initialState, action) {
     let list;
     switch (action.type) {
-        case ADD_DELEG_SUCCESS:
-            //list = state.offlineDelegList.concat(action.delegData);
+        case ADD_DELEG_SUCCESS: {
+            let arr = [];
+            if (action.delegData) {
+                arr = _.unionBy(
+                    Object.values(action.delegData),
+                    Object.values(state.offlineDelegList),
+                    'cislo'
+                );
+            } else {
+                arr = Object.values(state.offlineDelegList);
+            }
+            const deleg = _.sortBy(arr, [o => parseInt(o.cislo, 10)]);
             return {
                 ...state,
-                onlineDelegList: action.delegData,
-                offlineDelegList: action.delegData
+                onlineDelegList: deleg,
+                offlineDelegList: deleg
             };
-        case ADD_REFEREE_SUCCESS:
-            //list = state.onlineList.concat([action.itemData]).sort((a, b) => b.time - a.time);
+        }
+        case ADD_REFEREE_SUCCESS: {
+            let arr = [];
+            if (action.refereeData) {
+                arr = _.unionBy(
+                    Object.values(action.refereeData),
+                    Object.values(state.offlineRefereeList),
+                    'id'
+                );
+            } else {
+                arr = Object.values(state.offlineRefereeList);
+            }
+            const refs = _.sortBy(arr, 'id');
             return {
                 ...state,
-                onlineRefereeList: action.refereeData,
-                offlineRefereeList: action.refereeData
+                onlineRefereeList: refs,
+                offlineRefereeList: refs
             };
+        }
         case REMOVE_ITEM_SUCCESS: {
             list = state.onlineList.slice(0);
             const index = list.map(i => i.id).indexOf(action.id);
@@ -57,6 +83,12 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 offlineRefereeList: action.referee,
                 offlineRefereeLoaded: true
+            };
+        case TIMESTAMP_LOADED:
+            console.log('reducer_time_loaded', action.timestamp);
+            return {
+                ...state,
+                timestamp: action.timestamp
             };
 
         //INTERNET CONNECTION-----------------------------------------

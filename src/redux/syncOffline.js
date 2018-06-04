@@ -4,6 +4,7 @@ import { addDelegSuccess, addRefereeSuccess } from './actions/ItemsActions';
 export default function(store) {
     let currentDeleg = {};
     let currentReferee = {};
+    let currentTimestamp = null;
 
     store.subscribe(() => {
         const {
@@ -12,7 +13,8 @@ export default function(store) {
             offlineDelegList,
             offlineRefereeList,
             onlineDelegList,
-            onlineRefereeList
+            onlineRefereeList,
+            timestamp
         } = store.getState().items;
 
         if (offlineDelegLoaded && currentDeleg !== offlineDelegList) {
@@ -22,6 +24,11 @@ export default function(store) {
         if (offlineRefereeLoaded && currentReferee !== offlineRefereeList) {
             offline.save('/referees', offlineRefereeList);
             currentReferee = offlineRefereeList;
+        }
+
+        if (timestamp && currentTimestamp !== timestamp) {
+            offline.save('timestamp', timestamp);
+            currentTimestamp = timestamp;
         }
         if (Object.keys(offlineDelegList).length > 0 && Object.keys(onlineDelegList).length === 0) {
             store.dispatch(addDelegSuccess(offlineDelegList));

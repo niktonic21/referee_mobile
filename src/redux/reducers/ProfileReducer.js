@@ -1,11 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 import _ from 'lodash';
-import {
-  PROFILE_UPDATE,
-  PROFILE_EDITABLE,
-  PROFILE_CREATE
-} from '../actions/types';
+import { PROFILE_UPDATE, PROFILE_EDITABLE, PROFILE_CREATE } from '../actions/types';
 
 const INITIAL_STATE = {
   meno: '',
@@ -15,7 +11,7 @@ const INITIAL_STATE = {
   auto: '',
   email: '',
   created: false,
-  editable: null,
+  editable: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,16 +26,16 @@ export default (state = INITIAL_STATE, action) => {
           console.log('1111');
           const { meno, rozhodca, liga, mesto, auto, email } = action.payload.data;
 
-           console.log('1asdsd');
-           Actions.refresh({ rightTitle: 'Upravit' });
+          console.log('1asdsd');
+          Actions.refresh({ rightTitle: 'Upravit' });
           return { ...state, meno, rozhodca, liga, mesto, auto, email, editable: false };
-         }
+        }
 
         case false: {
           console.log(222222);
           Actions.refresh({ rightTitle: 'Ulozit' });
           return { ...state, editable: true };
-          }
+        }
 
         default: {
           const profileData = _.map(action.payload.data, (val, uid) => {
@@ -57,8 +53,9 @@ export default (state = INITIAL_STATE, action) => {
           //    .push({ meno: '', rozhodca: '', liga: '', mesto: '', auto: '', email: '' });
           return { ...state, editable: edit };
         }
-     } }
+      }
+    }
     default:
-    return state;
+      return state;
   }
 };
