@@ -1,6 +1,5 @@
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
-import { refereesRef } from '../firebase';
 import { store } from '../../../App';
 import { PROFILE_UPDATE, PROFILE_CLEAR, PROFILE_EDITABLE } from './types';
 

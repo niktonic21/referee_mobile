@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { Container, Content, List, ListItem, Text, Left, Body, Right, Switch } from 'native-base';
+import { Container, Content, List, ListItem, Text, Body, Right } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 
 export default class Settings extends Component {

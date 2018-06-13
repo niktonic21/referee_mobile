@@ -1,8 +1,17 @@
 import React from 'react';
 import { View, TextInput, Text } from 'react-native';
 
-const Input = ({ styleContainer, styleLabel, styleInput, label, value,
-  onChangeText, placeholder, secureTextEntry, editable }) => {
+const Input = ({
+  styleContainer,
+  styleLabel,
+  styleInput,
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  secureTextEntry,
+  editable
+}) => {
   const { containerStyle, inputStyle, labelStyle } = styles;
   return (
     <View style={[containerStyle, styleContainer]}>
@@ -26,17 +35,18 @@ const styles = {
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   inputStyle: {
     color: '#000',
     fontSize: 18,
     lineHeight: 23,
     flex: 5,
+    alignSelf: 'stretch'
   },
   labelStyle: {
-    fontSize: 18,
-    flex: 1
+    fontSize: 18
+    //flex: 1
   }
 };
 

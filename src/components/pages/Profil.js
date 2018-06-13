@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { loginStyle, profileStyle } from '../styles/styles';
+import { View, Text, Image, ScrollView, KeyboardAvoidingView, Switch } from 'react-native';
+import { profileStyle } from '../styles/styles';
 import { Card, Input } from '../reusable';
 import { profileUpdate } from '../../redux/actions';
 
@@ -9,7 +9,17 @@ const avatar = require('../../../assets/images/avatar.png');
 
 class Profil extends PureComponent {
   render() {
-    const { editable, meno, priezvisko, rozhodca, liga, mesto, auto, email } = this.props.profile;
+    const {
+      editable,
+      meno,
+      priezvisko,
+      rozhodca,
+      liga,
+      mesto,
+      auto,
+      email,
+      kategoria
+    } = this.props.profile;
     return (
       <ScrollView style={{ flex: 1 }}>
         <KeyboardAvoidingView behavior="position">
@@ -63,13 +73,37 @@ class Profil extends PureComponent {
             <Input
               styleLabel={profileStyle.inputLabel}
               styleInput={profileStyle.inputText}
-              styleContainer={[profileStyle.inputContainer, { borderBottomWidth: 0 }]}
+              styleContainer={profileStyle.inputContainer}
               label={'email'}
               onChangeText={text => this.props.profileUpdate({ prop: 'email', value: text })}
               placeholder={'Zadajte svoj email'}
               editable={editable || false}
               value={email}
             />
+            <View
+              style={[
+                profileStyle.inputContainer,
+                { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 0 }
+              ]}
+            >
+              <Text style={[profileStyle.inputText, { flex: 1, marginBottom: 0 }]}>Kategória</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  style={[
+                    profileStyle.inputText,
+                    { color: 'grey', marginRight: 10, marginBottom: 0, alignSelf: 'center' }
+                  ]}
+                >
+                  {kategoria}
+                </Text>
+                <Switch
+                  disabled={!editable}
+                  value={kategoria === 'B'}
+                  onValueChange={bool =>
+                    this.props.profileUpdate({ prop: 'kategoria', value: !bool ? 'A' : 'B' })}
+                />
+              </View>
+            </View>
           </Card>
         </KeyboardAvoidingView>
       </ScrollView>
