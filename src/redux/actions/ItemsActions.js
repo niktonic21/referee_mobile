@@ -11,7 +11,8 @@ import {
     CONNECTION_OFFLINE,
     CONNECTION_CHECKING,
     CONNECTION_ONLINE,
-    CONNECTION_CHECKED
+    CONNECTION_CHECKED,
+    TIMESTAMP_LOADED
 } from './types';
 
 export function addItem(title) {
@@ -30,6 +31,7 @@ export function addItem(title) {
 }
 
 export function addDelegSuccess(delegData) {
+    console.log('asdd_deleg');
     return {
         type: ADD_DELEG_SUCCESS,
         delegData
@@ -62,6 +64,22 @@ function offlineDelegLoaded(deleg) {
     return {
         type: OFFLINE_DELEG_LOADED,
         deleg
+    };
+}
+
+export function timestampLoaded(timestamp) {
+    console.log('timestampLoaded', timestamp);
+    return {
+        type: TIMESTAMP_LOADED,
+        timestamp
+    };
+}
+
+export function loadLastTimestamp() {
+    return dispatch => {
+        offline.get('timestamp').then(timestamp => {
+            dispatch(timestampLoaded(timestamp));
+        });
     };
 }
 

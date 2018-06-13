@@ -10,7 +10,6 @@ const width = Dimensions.get('window').width;
 
 class MatchDetail extends PureComponent {
     render() {
-        console.log('Data', this.props.data);
         const {
             liga,
             cas,

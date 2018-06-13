@@ -1,58 +1,57 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import {
-    EMAIL_CHANGED,
-    PASSWORD_CHANGED,
-    LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAIL,
-    LOGIN_USER,
-    LOGGED_IN_CHANGE
+  EMAIL_CHANGED,
+  PASSWORD_CHANGED,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAIL,
+  LOGIN_USER,
+  LOGGED_IN_CHANGE
 } from './types';
 
 export const emailChanged = text => {
-    return {
-        type: EMAIL_CHANGED,
-        payload: text
-    };
+  return {
+    type: EMAIL_CHANGED,
+    payload: text
+  };
 };
 
 export const passwordChanged = text => {
-    return {
-        type: PASSWORD_CHANGED,
-        payload: text
-    };
+  return {
+    type: PASSWORD_CHANGED,
+    payload: text
+  };
 };
 
 export const loginUser = ({ email, password }) => {
-    return dispatch => {
-        dispatch({ type: LOGIN_USER });
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(user => loginUserSuccess(dispatch, user))
-            .catch(error => {
-                console.log(error);
-                loginUserFail(dispatch, error);
-            });
-    };
+  return dispatch => {
+    dispatch({ type: LOGIN_USER });
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(user => loginUserSuccess(dispatch, user))
+      .catch(error => {
+        console.log(error);
+        loginUserFail(dispatch, error);
+      });
+  };
 };
 
 export const loggedInChange = (usr, lgdIn) => {
-    return {
-        type: LOGGED_IN_CHANGE,
-        payload: { usr, lgdIn }
-    };
+  return {
+    type: LOGGED_IN_CHANGE,
+    payload: { usr, lgdIn }
+  };
 };
 
 const loginUserSuccess = (dispatch, user) => {
-    dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: user
-    });
-    console.log('LOGIN OK');
-    Actions.zapasy();
+  dispatch({
+    type: LOGIN_USER_SUCCESS,
+    payload: user
+  });
+  Actions.pop();
 };
 
 const loginUserFail = (dispatch, error) => {
-    dispatch({ type: LOGIN_USER_FAIL, payload: error });
+  dispatch({ type: LOGIN_USER_FAIL, payload: error });
 };

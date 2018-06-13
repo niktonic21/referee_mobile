@@ -1,22 +1,36 @@
-import { profileEditable } from '../redux/actions';
+import { Alert } from 'react-native';
+import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
-import store from '../redux/store';
+import { profileUpdate } from '../redux/actions';
+import { store } from '../../App';
 
 class SetRouter {
-    profileEdit = () => {
-        const profile = store.getState().profile;
-        ///console.log('PROFILE', profile.editable);
-        if (profile.editable === true) {
-            console.log('PROFILE_1', profile.editable);
-            store.dispatch(profileEditable(true, profile));
-        } else if (profile.editable === false) {
-            console.log('PROFILE_2', profile.editable);
-            store.dispatch(profileEditable(false, profile));
-        } else {
-            console.log('PROFILE_3', profile.editable);
-            store.dispatch(profileEditable(false, profile));
-        }
-    };
+  profileEdit = () => {
+    const profile = store.getState().profile;
+    if (profile.editable === true && firebase.auth().currentUser) {
+      store.dispatch(profileUpdate({ prop: 'editable', value: false }));
+    } else if (profile.editable === false && firebase.auth().currentUser) {
+      store.dispatch(profileUpdate({ prop: 'editable', value: true }));
+    } else {
+      Alert.alert(
+        'Najprv sa prihláste.',
+        '',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: true }
+      );
+    }
+  };
+
+  saveData = () => {
+    const profile = store.getState().profile;
+    if (profile.editable === true) {
+      store.dispatch(profileUpdate({ prop: 'editable', value: false }));
+      Actions.pop();
+    } else {
+      Actions.pop();
+    }
+  };
 }
 
 export default SetRouter;

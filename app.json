@@ -1,24 +1,24 @@
 {
   "expo": {
     "name": "mobile-refree-expo",
-    "description": "An empty new project",
+    "description": "App for ice hockey referees on Slovakia ",
     "slug": "mobile-refree-expo",
-    "privacy": "public",
-    "sdkVersion": "22.0.0",
+    "privacy": "unlisted",
+    "sdkVersion": "24.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "loadJSInBackgroundExperimental": true
     }
   }
 }
