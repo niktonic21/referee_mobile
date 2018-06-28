@@ -1,6 +1,3 @@
-import { Actions } from 'react-native-router-flux';
-import firebase from 'firebase';
-import _ from 'lodash';
 import { PROFILE_UPDATE, PROFILE_EDITABLE, PROFILE_CLEAR } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,6 +15,9 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
+  if (!action.payload) {
+    return { ...state };
+  }
   switch (action.type) {
     case PROFILE_CLEAR:
       return { state: INITIAL_STATE };
@@ -25,7 +25,6 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, [action.payload.prop]: action.payload.value };
     }
     case PROFILE_EDITABLE: {
-      console.log('reducer:', action.payload);
       const {
         meno,
         priezvisko,

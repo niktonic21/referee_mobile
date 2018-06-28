@@ -7,6 +7,7 @@ import { StatusBar, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
+import { syncFirebase } from '../redux/firebase';
 import Login from '../components/pages/Login';
 import Settings from '../components/pages/Settings';
 import Zapasy from '../components/pages/Zapasy';
@@ -27,6 +28,7 @@ import { numberToMonth2 } from '../utils/Utils';
 
 class RouterS extends Component {
   componentWillMount() {
+    syncFirebase();
     //this.props.loadLastTimestamp();
     const month = new Date().getMonth() + 1;
     this.props.filterChanged('mesiac', numberToMonth2(month));

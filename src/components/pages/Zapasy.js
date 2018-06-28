@@ -16,36 +16,34 @@ import {
 import { dividedIntoSections, filterDataForRender } from '../../utils/Utils';
 
 let delegacia = null;
+
 class Zapasy extends Component {
   constructor(props) {
     super(props);
+    this.filterData = null;
     this.state = {
       renderData: null,
       scrollListToTop: false
     };
   }
 
-  componentWillMount() {
-    if (!this.filterData) {
-      this.props.loadOfflineDeleg();
-      this.props.loadOfflineReferee();
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { offlineDelegList, offlineRefereeList, filterValues } = nextProps;
-    if (offlineDelegList && this.props.offlineDelegList !== offlineDelegList) {
-      delegacia = dividedIntoSections(offlineDelegList);
+    const { delegList, refereeList, filterValues } = nextProps;
+    if (delegList && this.props.delegList !== delegList) {
+      delegacia = dividedIntoSections(delegList);
     }
-    if (offlineRefereeList && this.props.offlineRefereeList !== offlineRefereeList) {
-      this.filterData = [delegacia[1], delegacia[2], offlineRefereeList];
+    if (refereeList && this.props.refereeList !== refereeList) {
+      this.filterData = [delegacia[1], delegacia[2], refereeList];
     }
-    if (this.props.filterValues !== filterValues) {
-      const filteredData = filterDataForRender(
-        delegacia[0].slice(1),
-        filterValues,
-        offlineRefereeList
-      );
+    if (
+      delegacia &&
+      refereeList &&
+      this.filterData &&
+      (this.props.delegList !== delegList ||
+        this.props.refereeList !== refereeList ||
+        this.props.filterValues !== filterValues)
+    ) {
+      const filteredData = filterDataForRender(delegacia[0].slice(1), filterValues, refereeList);
       this.setState({ renderData: filteredData });
     }
   }
@@ -76,14 +74,14 @@ class Zapasy extends Component {
 }
 const mapStateToProps = ({ data, items, auth }) => {
   const { delegation, delegations, filterValues } = data;
-  const { offlineDelegList, offlineRefereeList } = items;
+  const { delegList, refereeList } = items;
   const { user, loggedIn } = auth;
   return {
     delegation,
     delegations,
     filterValues,
-    offlineDelegList,
-    offlineRefereeList,
+    delegList,
+    refereeList,
     user,
     loggedIn
   };

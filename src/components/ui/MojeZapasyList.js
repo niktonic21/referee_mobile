@@ -17,10 +17,10 @@ class MojeZapasyList extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    const { offlineDelegList, offlineRefereeList, user, loggedIn } = nextProps;
-    if (user && loggedIn && offlineDelegList !== this.props.offlineRefereeList) {
-      const matchesIdsOfUser = findRozhodcaMatches(user.uid, offlineRefereeList);
-      matchesOfUser = dividedIntoMonthSections(offlineDelegList, matchesIdsOfUser);
+    const { delegList, refereeList, user, loggedIn } = nextProps;
+    if (user && loggedIn && delegList !== this.props.refereeList) {
+      const matchesIdsOfUser = findRozhodcaMatches(user.uid, refereeList);
+      matchesOfUser = dividedIntoMonthSections(delegList, matchesIdsOfUser);
       this.setState({ renderData: matchesOfUser });
     }
   }
@@ -71,11 +71,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ items, auth }) => {
-  const { offlineDelegList, offlineRefereeList } = items;
+  const { delegList, refereeList } = items;
   const { user, loggedIn } = auth;
   return {
-    offlineDelegList,
-    offlineRefereeList,
+    delegList,
+    refereeList,
     user,
     loggedIn
   };

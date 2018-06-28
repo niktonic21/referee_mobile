@@ -1,18 +1,25 @@
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import storage from 'redux-persist/lib/storage';
 import reducer from './reducers';
-import syncOffline from './syncOffline';
-import { syncFirebase } from './firebase';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['profile', 'items']
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 export default function configureStore(initialState) {
-  const store = createStore(
-    reducer,
-    initialState,
-    composeWithDevTools(applyMiddleware(ReduxThunk))
-  );
-  syncOffline(store);
-  syncFirebase(store);
+  const middleware = applyMiddleware(thunk);
+  //const middleware = composeWithDevTools(applyMiddleware(thunk));
+
+  const store = createStore(persistedReducer, initialState, compose(middleware));
+  const persistor = persistStore(store);
+  //persistor.purge();
 
   if (module.hot) {
     module.hot.accept(() => {
@@ -21,5 +28,5 @@ export default function configureStore(initialState) {
     });
   }
 
-  return store;
+  return { store, persistor };
 }

@@ -34,11 +34,10 @@ export const clearProfile = () => {
 
 export const profileFetchData = () => {
   const { currentUser } = firebase.auth();
-  return dispatch => {
-    firebase.database().ref(`/referees/${currentUser.uid}`).on('value', snapshot => {
-      const data = snapshot.val();
-      console.log('FETHCH_profile', currentUser.uid, data);
-      dispatch({ type: PROFILE_EDITABLE, payload: { data } });
-    });
+  const data = store.getState().items.refereeList.find(e => e.id === currentUser.uid);
+  console.log('hhhh', data);
+  return {
+    type: PROFILE_EDITABLE,
+    payload: { data }
   };
 };
